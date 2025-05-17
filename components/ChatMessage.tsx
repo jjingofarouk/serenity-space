@@ -3,7 +3,7 @@
 import { Message } from '@/lib/types';
 import { format } from 'date-fns';
 import { motion } from 'framer-motion';
-import { useAuth } from '@/lib/auth';
+import { Timestamp } from 'firebase/firestore';
 
 interface ChatMessageProps {
   message: Message;
@@ -12,7 +12,7 @@ interface ChatMessageProps {
 
 export default function ChatMessage({ message, currentUserId }: ChatMessageProps) {
   const isCurrentUser = message.userId === currentUserId;
-  const timestamp = message.createdAt?.toDate
+  const timestamp = message.createdAt instanceof Timestamp
     ? format(message.createdAt.toDate(), 'HH:mm')
     : format(new Date(message.createdAt), 'HH:mm');
 
