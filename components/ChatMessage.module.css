@@ -1,0 +1,54 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600&display=swap');
+
+.messageContainer {
+  display: flex;
+  margin-bottom: 1rem;
+}
+
+.messageLeft {
+  justify-content: flex-start;
+}
+
+.messageRight {
+  justify-content: flex-end;
+}
+
+.message {
+  max-width: 70%;
+  padding: 1rem;
+  border-radius: 0.75rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  font-family: 'Open Sans', sans-serif;
+}
+
+.messageCurrentUser {
+  background: #2C6E7A;
+  color: #FFFFFF;
+}
+
+.messageOtherUser {
+  background: #F3F4F6;
+  color: #1C2526;
+}
+
+.messageText {
+  font-size: 1rem;
+  line-height: 1.5;
+  word-break: break-word;
+}
+
+.timestamp {
+  display: block;
+  margin-top: 0.25rem;
+  font-size: 0.75rem;
+  text-align: right;
+}
+
+.timestampCurrentUser {
+  color: #E6F5F7;
+}
+
+.timestampOtherUser {
+  color: #6B7280;
+}
