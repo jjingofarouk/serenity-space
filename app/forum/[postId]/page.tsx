@@ -4,6 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import { getPost } from '@/lib/firestore';
 import CommentSection from '@/components/CommentSection';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { motion } from 'framer-motion';
 
 export default function PostPage({ params }: { params: { postId: string } }) {
   const { data: post, isLoading } = useQuery({
@@ -11,21 +12,42 @@ export default function PostPage({ params }: { params: { postId: string } }) {
     queryFn: () => getPost(params.postId),
   });
 
-  if (isLoading) return <p>Loading...</p>;
-  if (!post) return <p>Post not found.</p>;
+  if (isLoading) {
+    return (
+      <p className="text-gray-700 text-lg text-center max-w-4xl mx-auto">
+        Loading...
+      </p>
+    );
+  }
+  if (!post) {
+    return (
+      <p className="text-gray-700 text-lg text-center max-w-4xl mx-auto">
+        Post not found.
+      </p>
+    );
+  }
 
   return (
-    <Card className="bg-blue-50 border-blue-200">
-      <CardHeader>
-        <CardTitle className="text-blue-800">{post.title}</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <p className="text-gray-700">{post.content}</p>
-        <p className="text-sm text-gray-500 mt-2">
-          Posted by User {post.userId} on {post.createdAt.toDateString()}
-        </p>
-        <CommentSection postId={params.postId} />
-      </CardContent>
-    </Card>
+    <motion.div
+      className="max-w-4xl mx-auto"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+    >
+      <Card className="bg-gradient-to-br from-blue-50 to-teal-50 border-none shadow-xl rounded-2xl">
+        <CardHeader className="border-b border-gray-200 pb-4">
+          <CardTitle className="text-3xl font-semibold text-blue-800 tracking-tight">
+            {post.title}
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="pt-6 space-y-4">
+          <p className="text-gray-700 text-lg leading-relaxed">{post.content}</p>
+          <p className="text-sm text-gray-500">
+            Posted by User {post.userId} on {post.createdAt.toDateString()}
+          </p>
+          <CommentSection postId={params.postId} />
+        </CardContent>
+      </Card>
+    </motion.div>
   );
 }
