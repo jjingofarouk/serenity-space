@@ -3,8 +3,11 @@ import Link from 'next/link';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Post } from '@/lib/types';
 import { motion } from 'framer-motion';
+import { format } from 'date-fns';
 
 export default function PostCard({ post }: { post: Post }) {
+  const createdAt = format(new Date(post.createdAt), 'MMM d, yyyy');
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -28,7 +31,7 @@ export default function PostCard({ post }: { post: Post }) {
             {post.content}
           </p>
           <p className="text-sm text-gray-500 mt-3">
-            Posted by User {post.userId} on {post.createdAt.toDateString()}
+            Posted by User {post.userId} on {createdAt}
           </p>
         </CardContent>
       </Card>
