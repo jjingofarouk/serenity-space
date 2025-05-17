@@ -4,9 +4,12 @@ import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Post } from '@/lib/types';
 import { motion } from 'framer-motion';
 import { format } from 'date-fns';
+import { Timestamp } from 'firebase/firestore';
 
 export default function PostCard({ post }: { post: Post }) {
-  const createdAt = format(new Date(post.createdAt), 'MMM d, yyyy');
+  const createdAt = post.createdAt instanceof Timestamp
+    ? format(post.createdAt.toDate(), 'MMM d, yyyy')
+    : format(post.createdAt, 'MMM d, yyyy');
 
   return (
     <motion.div
