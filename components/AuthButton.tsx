@@ -1,13 +1,13 @@
 // components/AuthButton.tsx
 'use client';
 import { useState } from 'react';
-import { useAuth, signInWithGoogle, signInAnonymously, signOutUser } from '@/lib/auth';
+import { useAuth } from '@/lib/auth';
 import { Button } from './ui/button';
 import { motion } from 'framer-motion';
 import LoginModal from './LoginModal';
 
 export default function AuthButton() {
-  const { user } = useAuth();
+  const { user, signInWithGoogle, signInAnonymously, signOutUser } = useAuth();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
