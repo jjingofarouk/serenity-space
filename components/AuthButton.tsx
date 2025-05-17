@@ -1,11 +1,14 @@
 // components/AuthButton.tsx
 'use client';
+import { useState } from 'react';
 import { useAuth, signInWithGoogle, signInAnonymously, signOutUser } from '@/lib/auth';
 import { Button } from './ui/button';
 import { motion } from 'framer-motion';
+import LoginModal from './LoginModal';
 
 export default function AuthButton() {
   const { user } = useAuth();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
     <motion.div
@@ -32,12 +35,20 @@ export default function AuthButton() {
             Sign In with Google
           </Button>
           <Button
+            onClick={() => setIsModalOpen(true)}
+            className="bg-teal-600 hover:bg-teal-700 text-white font-medium rounded-xl px-6 py-2 transition-all duration-200 ease-in-out transform hover:scale-105"
+            aria-label="Sign in with email"
+          >
+            Sign In with Email
+          </Button>
+          <Button
             onClick={signInAnonymously}
             className="bg-gray-600 hover:bg-gray-700 text-white font-medium rounded-xl px-6 py-2 transition-all duration-200 ease-in-out transform hover:scale-105"
             aria-label="Sign in anonymously"
           >
             Sign In Anonymously
           </Button>
+          <LoginModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
         </>
       )}
     </motion.div>
