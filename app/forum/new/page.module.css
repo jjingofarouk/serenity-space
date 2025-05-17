@@ -1,83 +1,109 @@
-
 @import url('https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600&family=Open+Sans:wght@400;500;600&display=swap');
 
 .container {
   max-width: 64rem;
   margin: 0 auto;
+  padding: 1rem;
 }
 
 .card {
-  background: linear-gradient(to bottom right, #E6F5F7, #F0F9F5);
+  background: var(--card-background);
   border: none;
-  border-radius: 1.5rem;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  border-radius: 1rem;
+  box-shadow: 0 4px 12px var(--shadow);
+  backdrop-filter: blur(8px);
+  transition: box-shadow 0.2s ease;
+}
+
+.card:hover {
+  box-shadow: 0 6px 16px var(--shadow);
 }
 
 .cardHeader {
-  border-bottom: 1px solid #D1D5DB;
-  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border);
+  padding: 1.5rem 2rem;
 }
 
 .cardTitle {
   font-family: 'Lora', serif;
-  font-size: 1.875rem;
+  font-size: 1.75rem;
   font-weight: 500;
-  color: #2C6E7A;
+  color: var(--text-primary);
+  margin: 0;
 }
 
 .cardContent {
-  padding-top: 1.5rem;
+  padding: 2rem;
 }
 
 .form {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 1.25rem;
 }
 
 .input {
   width: 100%;
-  padding: 0.75rem;
+  padding: 0.875rem 1rem;
   font-family: 'Open Sans', sans-serif;
-  font-size: 1rem;
-  color: #1C2526;
-  background: #FFFFFF;
-  border: 1px solid #D1D5DB;
+  font-size: 0.9375rem;
+  color: var(--text-primary);
+  background: var(--card-background);
+  border: 1px solid var(--border);
   border-radius: 0.75rem;
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .input::placeholder {
-  color: #6B7280;
+  color: var(--text-secondary);
 }
 
 .input:focus {
   outline: none;
-  border-color: #2C6E7A;
-  box-shadow: 0 0 0 2px #2C6E7A, 0 0 0 4px rgba(44, 110, 122, 0.2);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(44, 110, 122, 0.2);
 }
 
 .textarea {
   width: 100%;
-  resize: none;
+  resize: vertical;
+  padding: 0.875rem 1rem;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 0.9375rem;
+  color: var(--text-primary);
+  background: var(--card-background);
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.textarea::placeholder {
+  color: var(--text-secondary);
+}
+
+.textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(44, 110, 122, 0.2);
 }
 
 .button {
-  background: #2C6E7A;
+  background: var(--accent);
   color: #FFFFFF;
-  padding: 0.75rem 1.5rem;
+  padding: 0.75rem 1.25rem;
   font-family: 'Open Sans', sans-serif;
-  font-size: 1rem;
+  font-size: 0.9375rem;
   font-weight: 500;
-  border-radius: 2rem;
+  border-radius: 0.75rem;
   border: none;
   cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .button:hover {
-  background: #5BA199;
-  transform: scale(1.05);
+  background: var(--accent-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px var(--shadow);
 }
 
 .button:disabled {
