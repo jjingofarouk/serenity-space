@@ -1,4 +1,4 @@
-
+// app/login/page.module.css
 @import url('https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600&family=Open+Sans:wght@400;500;600&display=swap');
 
 .container {
@@ -6,15 +6,15 @@
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background: linear-gradient(to bottom right, #E6F5F7, #F0F9F5);
+  background: var(--background);
   padding: 1rem;
 }
 
 .card {
-  background: rgba(255, 255, 255, 0.9);
+  background: var(--card-background);
   backdrop-filter: blur(8px);
   border-radius: 1.5rem;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 24px var(--shadow);
   width: 100%;
   max-width: 400px;
 }
@@ -40,7 +40,7 @@
   font-family: 'Lora', serif;
   font-size: 1.5rem;
   font-weight: 500;
-  color: #1C2526;
+  color: var(--text-primary);
   text-decoration: none;
   margin-left: 0.5rem;
 }
@@ -49,15 +49,14 @@
   font-family: 'Lora', serif;
   font-size: 1.75rem;
   font-weight: 500;
-  color: #1C2526;
+  color: var(--text-primary);
   margin-bottom: 0.5rem;
 }
 
 .subtitle {
   font-family: 'Open Sans', sans-serif;
   font-size: 0.875rem;
-  color: #1C2526;
-  opacity: 0.8;
+  color: var(--text-secondary);
 }
 
 .cardContent {
@@ -80,39 +79,39 @@
   font-family: 'Open Sans', sans-serif;
   font-size: 0.875rem;
   font-weight: 500;
-  color: #1C2526;
+  color: var(--text-primary);
 }
 
 .input {
   padding: 0.75rem 1rem;
   font-family: 'Open Sans', sans-serif;
   font-size: 0.875rem;
-  color: #1C2526;
-  background: #FFFFFF;
-  border: 1px solid #D1D5DB;
+  color: var(--text-primary);
+  background: var(--card-background);
+  border: 1px solid var(--border);
   border-radius: 0.75rem;
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .input:focus {
-  border-color: #2C6E7A;
+  border-color: var(--accent);
   box-shadow: 0 0 0 2px rgba(44, 110, 122, 0.2);
   outline: none;
 }
 
 .input::placeholder {
-  color: #6B7280;
+  color: var(--text-secondary);
 }
 
 .error {
   font-family: 'Open Sans', sans-serif;
   font-size: 0.75rem;
-  color: #DC2626;
+  color: var(--error);
   text-align: center;
 }
 
 .submitButton {
-  background: #2C6E7A;
+  background: var(--accent);
   color: #FFFFFF;
   font-family: 'Open Sans', sans-serif;
   font-size: 1rem;
@@ -125,7 +124,7 @@
 }
 
 .submitButton:hover {
-  background: #5BA199;
+  background: var(--accent-hover);
   transform: scale(1.02);
 }
 
@@ -137,12 +136,12 @@
 .switchText {
   font-family: 'Open Sans', sans-serif;
   font-size: 0.875rem;
-  color: #1C2526;
+  color: var(--text-primary);
 }
 
 .switchLink {
   font-weight: 500;
-  color: #2C6E7A;
+  color: var(--accent);
   background: none;
   border: none;
   cursor: pointer;
@@ -151,7 +150,7 @@
 }
 
 .switchLink:hover {
-  color: #5BA199;
+  color: var(--accent-hover);
 }
 
 .terms {
@@ -162,16 +161,15 @@
 .termsText {
   font-family: 'Open Sans', sans-serif;
   font-size: 0.75rem;
-  color: #1C2526;
-  opacity: 0.8;
+  color: var(--text-secondary);
 }
 
 .termsLink {
-  color: #2C6E7A;
+  color: var(--accent);
   font-weight: 500;
   transition: color 0.2s ease;
 }
 
 .termsLink:hover {
-  color: #5BA199;
+  color: var(--accent-hover);
 }
