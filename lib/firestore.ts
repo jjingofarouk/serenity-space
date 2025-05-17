@@ -1,6 +1,6 @@
 // lib/firestore.ts
 import { db } from './firebase';
-import { collection, addDoc, getDocs, getDoc, doc } from 'firebase/firestore';
+import { collection, addDoc, getDocs, getDoc, doc, query, orderBy } from 'firebase/firestore';
 import { Post, Message, Comment } from './types';
 
 export async function addPost(post: Omit<Post, 'id'>) {
@@ -24,4 +24,10 @@ export async function addComment(comment: Omit<Comment, 'id'>) {
 
 export async function addMessage(message: Omit<Message, 'id'>) {
   await addDoc(collection(db, 'messages'), message);
+}
+
+export async function getMessages(): Promise<Message[]> {
+  const messagesQuery = query(collection(db, 'messages'), orderBy('createdAt', 'asc'));
+  const querySnapshot = await getDocs(messagesQuery);
+  return querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() } as Message));
 }
