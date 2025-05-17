@@ -7,12 +7,29 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { motion } from 'framer-motion';
 import { Timestamp } from 'firebase/firestore';
 import { format } from 'date-fns';
+import { useState, useEffect } from 'react';
+import { doc, getDoc } from 'firebase/firestore';
+import { db } from '@/lib/firebase';
 
 export default function PostPage({ params }: { params: { postId: string } }) {
+  const [displayName, setDisplayName] = useState('Unknown User');
   const { data: post, isLoading } = useQuery({
     queryKey: ['post', params.postId],
     queryFn: () => getPost(params.postId),
   });
+
+  useEffect(() => {
+    if (post) {
+      const fetchDisplayName = async () => {
+        const userRef = doc(db, 'users', post.userId);
+        const userDoc = await getDoc(userRef);
+        if (userDoc.exists()) {
+          setDisplayName(userDoc.data().displayName || 'Unknown User');
+        }
+      };
+      fetchDisplayName();
+    }
+  }, [post]);
 
   if (isLoading) {
     return (
@@ -49,7 +66,7 @@ export default function PostPage({ params }: { params: { postId: string } }) {
         <CardContent className="pt-6 space-y-4">
           <p className="text-gray-700 text-lg leading-relaxed">{post.content}</p>
           <p className="text-sm text-gray-500">
-            Posted by User {post.userId} on {createdAt}
+            Posted by {displayName} on {createdAt}
           </p>
           <CommentSection postId={params.postId} />
         </CardContent>
