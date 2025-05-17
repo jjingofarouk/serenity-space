@@ -1,4 +1,5 @@
 // app/forum/page.tsx
+'use client'; // Ensure client-side rendering
 import { useQuery } from '@tanstack/react-query';
 import { getPosts } from '@/lib/firestore';
 import PostCard from '@/components/PostCard';
