@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { motion } from 'framer-motion';
+import { Timestamp } from 'firebase/firestore';
 
 export default function NewPost() {
   const [title, setTitle] = useState('');
@@ -22,7 +23,7 @@ export default function NewPost() {
       return;
     }
     try {
-      await addPost({ title, content, userId: user.uid, createdAt: new Date() });
+      await addPost({ title, content, userId: user.uid, createdAt: Timestamp.now() });
       router.push('/forum');
     } catch (error) {
       console.error('Failed to create post:', error);
