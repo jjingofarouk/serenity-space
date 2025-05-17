@@ -5,9 +5,13 @@ import { format } from 'date-fns';
 import { motion } from 'framer-motion';
 import { useAuth } from '@/lib/auth';
 
-export default function ChatMessage({ message }: { message: Message }) {
-  const { user } = useAuth();
-  const isCurrentUser = message.userId === user?.uid;
+interface ChatMessageProps {
+  message: Message;
+  currentUserId?: string;
+}
+
+export default function ChatMessage({ message, currentUserId }: ChatMessageProps) {
+  const isCurrentUser = message.userId === currentUserId;
   const timestamp = message.createdAt?.toDate
     ? format(message.createdAt.toDate(), 'HH:mm')
     : format(new Date(message.createdAt), 'HH:mm');
