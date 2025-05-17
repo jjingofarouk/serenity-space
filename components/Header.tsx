@@ -1,4 +1,5 @@
 // components/Header.tsx
+'use client';
 import Link from 'next/link';
 import AuthButton from './AuthButton';
 import { Card } from './ui/card';
