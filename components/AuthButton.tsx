@@ -1,7 +1,6 @@
 // components/AuthButton.tsx
 'use client';
-import { useAuth } from '@/lib/auth';
-import { signInWithGoogle, signInAnonymously, signOutUser } from '@/lib/auth';
+import { useAuth, signInWithGoogle, signInAnonymously, signOutUser } from '@/lib/auth';
 import { Button } from './ui/button';
 
 export default function AuthButton() {
