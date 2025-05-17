@@ -1,4 +1,5 @@
 // app/page.tsx
+'use client';
 import Link from 'next/link';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
@@ -7,7 +8,7 @@ export default function Home() {
     <div className="space-y-6">
       <Card className="bg-blue-50 border-blue-200">
         <CardHeader>
-          <CardTitle className="text-blue-800">Welcome to the Support Community</CardTitle>
+          <CardTitle className="text-blue-800">Welcome to SerenitySpace</CardTitle>
         </CardHeader>
         <CardContent>
           <p className="text-gray-700">
