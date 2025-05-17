@@ -7,6 +7,7 @@ import { Button } from './ui/button';
 import { Textarea } from './ui/textarea';
 import { motion } from 'framer-motion';
 import { Timestamp } from 'firebase/firestore';
+import styles from './CommentSection.module.css';
 
 export default function CommentSection({ postId }: { postId: string }) {
   const [comment, setComment] = useState('');
@@ -31,27 +32,25 @@ export default function CommentSection({ postId }: { postId: string }) {
 
   return (
     <motion.div
-      className="mt-6"
+      className={styles.container}
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
     >
-      <h3 className="text-xl font-semibold text-blue-800 tracking-tight mb-4">
-        Comments
-      </h3>
+      <h3 className={styles.title}>Comments</h3>
       {user ? (
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className={styles.form}>
           <Textarea
             value={comment}
             onChange={(e) => setComment(e.target.value)}
             placeholder="Add a comment..."
-            className="w-full resize-none rounded-xl border-gray-300 focus:ring-2 focus:ring-teal-500 focus:border-transparent placeholder-gray-500 text-gray-800 text-base"
+            className={styles.textarea}
             rows={4}
             aria-label="Comment input"
           />
           <Button
             type="submit"
-            className="bg-teal-600 hover:bg-teal-700 text-white font-medium rounded-xl px-6 transition-all duration-200 ease-in-out transform hover:scale-105"
+            className={styles.button}
             disabled={!comment.trim()}
             aria-label="Submit comment"
           >
@@ -59,9 +58,9 @@ export default function CommentSection({ postId }: { postId: string }) {
           </Button>
         </form>
       ) : (
-        <p className="text-gray-700 text-base">
+        <p className={styles.signInPrompt}>
           Please{' '}
-          <a href="/login" className="text-teal-600 hover:text-teal-700 font-medium">
+          <a href="/login" className={styles.signInLink}>
             sign in
           </a>{' '}
           to comment.
