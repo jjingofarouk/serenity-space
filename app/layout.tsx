@@ -1,13 +1,31 @@
 // app/layout.tsx
-import { ReactNode } from 'react';
-import styles from './styles/layout.module.css';
+import { ThemeProvider } from '@/lib/ThemeContext';
+import './globals.css';
+import { Inter } from 'next/font/google';
+import Header from '@/components/Header';
 import ClientLayout from '@/components/ClientLayout';
 
-export default function RootLayout({ children }: { children: ReactNode }) {
+const inter = Inter({ subsets: ['latin'] });
+
+export const metadata = {
+  title: 'SerenitySpace',
+  description: 'A supportive community for mental health',
+};
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
-    <html lang="en">
-      <body className={styles.body}>
-        <ClientLayout>{children}</ClientLayout>
+    <html lang="en" data-theme="light">
+      <body className={inter.className}>
+        <ThemeProvider>
+          <ClientLayout>
+            <Header />
+            {children}
+          </ClientLayout>
+        </ThemeProvider>
       </body>
     </html>
   );
