@@ -1,4 +1,3 @@
-// app/login/page.tsx
 'use client';
 import { useState } from 'react';
 import { useAuth } from '@/lib/auth';
@@ -8,6 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import Image from 'next/image';
+import { User, LogIn } from 'lucide-react';
 import styles from './page.module.css';
 
 export default function LoginPage() {
@@ -15,7 +15,7 @@ export default function LoginPage() {
   const [password, setPassword] = useState('');
   const [isSignUp, setIsSignUp] = useState(false);
   const [error, setError] = useState('');
-  const { signInWithEmail, signUpWithEmail } = useAuth();
+  const { signInWithEmail, signUpWithEmail, signInWithGoogle, signInAnonymously } = useAuth();
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -32,6 +32,26 @@ export default function LoginPage() {
       router.push('/');
     } catch (err: any) {
       setError(err.message || 'Authentication failed. Please try again.');
+    }
+  };
+
+  const handleGoogleSignIn = async () => {
+    setError('');
+    try {
+      await signInWithGoogle();
+      router.push('/');
+    } catch (err: any) {
+      setError(err.message || 'Google sign-in failed. Please try again.');
+    }
+  };
+
+  const handleAnonymousSignIn = async () => {
+    setError('');
+    try {
+      await signInAnonymously();
+      router.push('/');
+    } catch (err: any) {
+      setError(err.message || 'Anonymous sign-in failed. Please try again.');
     }
   };
 
@@ -97,9 +117,7 @@ export default function LoginPage() {
                 aria-label="Password"
               />
             </div>
-            {error && (
-              <p className={styles.error}>{error}</p>
-            )}
+            {error && <p className={styles.error}>{error}</p>}
             <Button
               type="submit"
               className={styles.submitButton}
@@ -120,6 +138,24 @@ export default function LoginPage() {
                 {isSignUp ? 'Sign In' : 'Sign Up'}
               </button>
             </p>
+          </div>
+          <div className={styles.alternativeSignIn}>
+            <Button
+              onClick={handleGoogleSignIn}
+              className={styles.submitButton}
+              aria-label="Sign in with Google"
+            >
+              <User size={16} style={{ marginRight: '0.5rem' }} />
+              Sign in with Google
+            </Button>
+            <Button
+              onClick={handleAnonymousSignIn}
+              className={styles.submitButton}
+              aria-label="Sign in anonymously"
+            >
+              <LogIn size={16} style={{ marginRight: '0.5rem' }} />
+              Sign in Anonymously
+            </Button>
           </div>
           <div className={styles.terms}>
             <p className={styles.termsText}>
