@@ -1,5 +1,31 @@
 
-@import url('https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600&family=Open+Sans:wght@400;500;600&display=swap');
-@import './styles/base.css';
-@import './styles/components.css';
-@import './styles/utils.css';
+:root {
+  --background: #E6F5F7;
+  --card-background: rgba(255, 255, 255, 0.9);
+  --text-primary: #1C2526;
+  --text-secondary: #6B7280;
+  --accent: #2C6E7A;
+  --accent-hover: #5BA199;
+  --border: #D1D5DB;
+  --error: #DC2626;
+  --shadow: rgba(0, 0, 0, 0.1);
+}
+
+[data-theme='dark'] {
+  --background: #1C2526;
+  --card-background: rgba(45, 55, 72, 0.9);
+  --text-primary: #F3F4F6;
+  --text-secondary: #9CA3AF;
+  --accent: #5BA199;
+  --accent-hover: #2C6E7A;
+  --border: #4B5563;
+  --error: #F87171;
+  --shadow: rgba(0, 0, 0, 0.3);
+}
+
+body {
+  margin: 0;
+  background: var(--background);
+  color: var(--text-primary);
+  transition: background 0.3s ease, color 0.3s ease;
+}
