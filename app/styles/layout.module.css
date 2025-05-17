@@ -1,0 +1,12 @@
+
+.body {
+  font-family: 'Lora', serif;
+  font-size: 16px;
+  line-height: 1.5;
+  background: linear-gradient(to bottom, #FDF6E3, #E0F4FA);
+  color: #1C2526;
+  min-height: 100vh;
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
