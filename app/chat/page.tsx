@@ -10,6 +10,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { onSnapshot, collection } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Timestamp } from 'firebase/firestore';
 
 export default function Chat() {
   const [messages, setMessages] = useState<any[]>([]);
@@ -41,7 +42,7 @@ export default function Chat() {
       await addMessage({
         text: newMessage,
         userId: user.uid,
-        createdAt: new Date(),
+        createdAt: Timestamp.now(),
       });
       setNewMessage('');
     } catch (error) {
