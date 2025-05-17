@@ -1,9 +1,9 @@
 
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
 
 .messageContainer {
   display: flex;
-  margin-bottom: 1rem;
+  margin-bottom: 0.75rem;
 }
 
 .messageLeft {
@@ -16,24 +16,24 @@
 
 .message {
   max-width: 70%;
-  padding: 1rem;
-  border-radius: 0.75rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-  font-family: 'Open Sans', sans-serif;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  font-family: 'Inter', sans-serif;
 }
 
 .messageCurrentUser {
   background: #2C6E7A;
-  color: #FFFFFF;
+  color: #D7DADC;
 }
 
 .messageOtherUser {
-  background: #F3F4F6;
-  color: #1C2526;
+  background: #2F2F30;
+  color: #B0B3B8;
 }
 
 .messageText {
-  font-size: 1rem;
+  font-size: 0.875rem;
   line-height: 1.5;
   word-break: break-word;
 }
@@ -46,7 +46,7 @@
 }
 
 .timestampCurrentUser {
-  color: #E6F5F7;
+  color: #B0B3B8;
 }
 
 .timestampOtherUser {
