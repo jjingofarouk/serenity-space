@@ -1,19 +1,29 @@
 /* app/globals.css */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --primary: #4B5EAA; /* Soft blue */
-  --secondary: #D6E6FF; /* Light blue */
-  --background: #F1F5F9; /* Light gray */
-  --text: #1F2937; /* Dark gray */
-}
+@layer base {
+  html {
+    font-family: 'Inter', sans-serif;
+  }
 
-body {
-  @apply bg-background text-text;
-}
+  body {
+    @apply bg-gray-100 text-gray-900 antialiased;
+  }
 
-.container {
-  @apply max-w-4xl mx-auto;
+  /* Custom focus styles for accessibility */
+  [role="button"],
+  button,
+  input,
+  textarea {
+    @apply focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2;
+  }
+
+  /* Smooth scroll for chat */
+  [role="log"] {
+    scroll-behavior: smooth;
+  }
 }
