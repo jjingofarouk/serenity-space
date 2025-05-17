@@ -2,16 +2,27 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
-import { Menu, X, Home, Clipboard, MessageSquare, Folder, HelpCircle, FileText, Lock, Handshake, Sun, Moon, LogIn } from 'lucide-react';
+import { Menu, X, Home, Clipboard, MessageSquare, Folder, HelpCircle, FileText, Lock, Handshake, Sun, Moon, LogIn, LogOut } from 'lucide-react';
 import { useState } from 'react';
 import { useTheme } from '@/lib/ThemeContext';
+import { useAuth } from '@/lib/auth';
 import styles from './Header.module.css';
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const { theme, toggleTheme } = useTheme();
+  const { user, signOutUser } = useAuth();
 
   const toggleMenu = () => setIsOpen(!isOpen);
+
+  const handleLogout = async () => {
+    try {
+      await signOutUser();
+      toggleMenu();
+    } catch (error) {
+      console.error('Logout failed:', error);
+    }
+  };
 
   return (
     <motion.header
@@ -79,9 +90,19 @@ export default function Header() {
             <Link href="/user-agreement" className={styles.navLink} onClick={toggleMenu}>
               <Handshake className={styles.icon} size={16} /> User Agreement
             </Link>
-            <Link href="/login" className={styles.navLink} onClick={toggleMenu}>
-              <LogIn className={styles.icon} size={16} /> Login
-            </Link>
+            {user ? (
+              <button
+                onClick={handleLogout}
+                className={styles.navLink}
+                aria-label="Log out"
+              >
+                <LogOut className={styles.icon} size={16} /> Logout
+              </button>
+            ) : (
+              <Link href="/login" className={styles.navLink} onClick={toggleMenu}>
+                <LogIn className={styles.icon} size={16} /> Login
+              </Link>
+            )}
             <button
               onClick={toggleTheme}
               className={styles.navLink}
