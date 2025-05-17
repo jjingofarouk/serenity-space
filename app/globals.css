@@ -1,52 +1,5 @@
-/* app/globals.css */
+// app/globals.css
 @import url('https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600&family=Open+Sans:wght@400;500;600&display=swap');
-
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-@layer base {
-  html {
-    font-family: 'Lora', serif;
-  }
-
-  body {
-    @apply bg-amber-50 text-gray-800 antialiased;
-  }
-
-  /* Headings */
-  h1, h2, h3, h4, h5, h6 {
-    @apply font-serif text-teal-900;
-  }
-
-  /* Paragraphs and text */
-  p, span, a, li {
-    @apply font-sans;
-  }
-
-  /* Custom focus styles for accessibility */
-  [role="button"],
-  button,
-  input,
-  textarea {
-    @apply focus:outline-none focus:ring-2 focus:ring-teal-600 focus:ring-offset-2 focus:ring-offset-amber-50 transition-shadow duration-200;
-  }
-
-  /* Smooth scroll for chat */
-  [role="log"] {
-    scroll-behavior: smooth;
-  }
-
-  /* Scrollbar styling */
-  *::-webkit-scrollbar {
-    @apply w-2;
-  }
-
-  *::-webkit-scrollbar-track {
-    @apply bg-amber-100 rounded-full;
-  }
-
-  *::-webkit-scrollbar-thumb {
-    @apply bg-teal-400 rounded-full;
-  }
-}
+@import './styles/base.css';
+@import './styles/components.css';
+@import './styles/utils.css';
