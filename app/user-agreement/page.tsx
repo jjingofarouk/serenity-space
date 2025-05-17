@@ -37,7 +37,7 @@ export default function UserAgreement() {
               You are responsible for:
               <ul className={styles.list}>
                 <li>Maintaining the confidentiality of your account credentials.</li>
-                <li>All activities conducted under your account, whether authorized or not.</li>
+                <li>All activities conducted under yourでお, whether authorized or not.</li>
                 <li>Notifying us immediately of any unauthorized access or security breaches at <a href="mailto:security@serenityspace.com" className="text-teal-600 hover:text-teal-400">security@serenityspace.com</a>.</li>
               </ul>
               We reserve the right to suspend or terminate your account for violations of this Agreement or our Community Rules.
