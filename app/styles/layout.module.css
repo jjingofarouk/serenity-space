@@ -1,10 +1,12 @@
 
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+
 .body {
-  font-family: 'Lora', serif;
+  font-family: 'Inter', sans-serif;
   font-size: 16px;
   line-height: 1.5;
-  background: linear-gradient(to bottom, #FDF6E3, #E0F4FA);
-  color: #1C2526;
+  background: #1A1A1B;
+  color: #D7DADC;
   min-height: 100vh;
   margin: 0;
   -webkit-font-smoothing: antialiased;
