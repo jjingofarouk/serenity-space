@@ -1,14 +1,42 @@
 // components/ChatMessage.tsx
+'use client';
 import { Message } from '@/lib/types';
-import { Card } from './ui/card';
+import { format } from 'date-fns';
+import { motion } from 'framer-motion';
+import { useAuth } from '@/lib/auth';
 
 export default function ChatMessage({ message }: { message: Message }) {
+  const { user } = useAuth();
+  const isCurrentUser = message.userId === user?.uid;
+  const timestamp = message.createdAt?.toDate
+    ? format(message.createdAt.toDate(), 'HH:mm')
+    : format(new Date(message.createdAt), 'HH:mm');
+
   return (
-    <Card className="bg-white p-2 mb-2">
-      <p className="text-gray-700">{message.text}</p>
-      <p className="text-xs text-gray-500">
-        User {message.userId} • {message.createdAt.toDateString()}
-      </p>
-    </Card>
+    <motion.div
+      className={`flex ${isCurrentUser ? 'justify-end' : 'justify-start'} mb-4`}
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3 }}
+      role="listitem"
+      aria-label={`Message from ${isCurrentUser ? 'you' : 'another user'}`}
+    >
+      <div
+        className={`max-w-[70%] p-4 rounded-xl shadow-sm ${
+          isCurrentUser
+            ? 'bg-teal-600 text-white'
+            : 'bg-gray-100 text-gray-800'
+        }`}
+      >
+        <p className="text-base break-words">{message.text}</p>
+        <span
+          className={`text-xs ${
+            isCurrentUser ? 'text-teal-100' : 'text-gray-500'
+          } block mt-1 text-right`}
+        >
+          {timestamp}
+        </span>
+      </div>
+    </motion.div>
   );
 }
