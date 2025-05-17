@@ -11,6 +11,7 @@ import { onSnapshot, collection } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Timestamp } from 'firebase/firestore';
+import styles from './page.module.css';
 
 export default function Chat() {
   const [messages, setMessages] = useState<any[]>([]);
@@ -52,15 +53,13 @@ export default function Chat() {
   };
 
   return (
-    <Card className="bg-gradient-to-br from-blue-50 to-teal-50 border-none shadow-xl rounded-2xl max-w-4xl mx-auto">
-      <CardHeader className="border-b border-gray-200">
-        <CardTitle className="text-2xl font-semibold text-blue-800 tracking-tight">
-          Community Chat
-        </CardTitle>
+    <Card className={styles.card}>
+      <CardHeader className={styles.cardHeader}>
+        <CardTitle className={styles.cardTitle}>Community Chat</CardTitle>
       </CardHeader>
-      <CardContent className="p-6">
+      <CardContent className={styles.cardContent}>
         <div
-          className="h-[60vh] max-h-[600px] overflow-y-auto mb-6 p-4 bg-white rounded-xl shadow-inner"
+          className={styles.chatContainer}
           role="log"
           aria-live="polite"
         >
@@ -80,18 +79,18 @@ export default function Chat() {
           <div ref={messagesEndRef} />
         </div>
         {user ? (
-          <form onSubmit={handleSend} className="flex gap-3">
+          <form onSubmit={handleSend} className={styles.form}>
             <Textarea
               value={newMessage}
               onChange={(e) => setNewMessage(e.target.value)}
               placeholder="Type your message..."
-              className="flex-grow resize-none rounded-xl border-gray-300 focus:ring-2 focus:ring-teal-500 focus:border-transparent placeholder-gray-500 text-gray-800"
+              className={styles.textarea}
               rows={3}
               aria-label="Message input"
             />
             <Button
               type="submit"
-              className="bg-teal-600 hover:bg-teal-700 text-white font-medium rounded-xl px-6 transition-all duration-200 ease-in-out transform hover:scale-105"
+              className={styles.button}
               disabled={!newMessage.trim()}
               aria-label="Send message"
             >
@@ -99,9 +98,9 @@ export default function Chat() {
             </Button>
           </form>
         ) : (
-          <p className="text-gray-700 text-center text-base">
+          <p className={styles.signInPrompt}>
             Please{' '}
-            <a href="/login" className="text-teal-600 hover:underline font-medium">
+            <a href="/login" className={styles.signInLink}>
               sign in
             </a>{' '}
             to join the conversation.
