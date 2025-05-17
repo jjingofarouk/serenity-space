@@ -1,0 +1,57 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600&family=Open+Sans:wght@400;500;600&display=swap');
+
+.card {
+  background: linear-gradient(to bottom right, #E6F5F7, #F0F9F5);
+  border: none;
+  border-radius: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  transition: box-shadow 0.2s ease;
+}
+
+.card:hover {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+.cardHeader {
+  padding-bottom: 1rem;
+}
+
+.cardTitle {
+  font-family: 'Lora', serif;
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: #2C6E7A;
+}
+
+.titleLink {
+  text-decoration: none;
+  color: #2C6E7A;
+  transition: color 0.2s ease;
+}
+
+.titleLink:hover {
+  color: #5BA199;
+}
+
+.cardContent {
+  padding: 1.5rem;
+}
+
+.content {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 1rem;
+  color: #1C2526;
+  line-height: 1.75;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.meta {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 0.875rem;
+  color: #6B7280;
+  margin-top: 0.75rem;
+}
