@@ -6,6 +6,7 @@ import { addComment } from '@/lib/firestore';
 import { Button } from './ui/button';
 import { Textarea } from './ui/textarea';
 import { motion } from 'framer-motion';
+import { Timestamp } from 'firebase/firestore';
 
 export default function CommentSection({ postId }: { postId: string }) {
   const [comment, setComment] = useState('');
@@ -19,7 +20,7 @@ export default function CommentSection({ postId }: { postId: string }) {
         postId,
         text: comment,
         userId: user.uid,
-        createdAt: new Date(),
+        createdAt: Timestamp.now(),
       });
       setComment('');
     } catch (error) {
