@@ -1,7 +1,7 @@
 // app/layout.tsx
 import { ReactNode } from 'react';
 import Header from '@/components/Header';
-import { AuthProvider } from '@/components/AuthProvider'; // fixed path
+import { AuthProvider } from '@/lib/auth';
 import './globals.css';
 
 export default function RootLayout({ children }: { children: ReactNode }) {
