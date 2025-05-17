@@ -3,10 +3,15 @@
 import Link from 'next/link';
 import AuthButton from './AuthButton';
 import { motion } from 'framer-motion';
-import { Leaf } from 'lucide-react';
+import { Leaf, Menu, X } from 'lucide-react';
+import { useState } from 'react';
 import styles from './Header.module.css';
 
 export default function Header() {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleMenu = () => setIsOpen(!isOpen);
+
   return (
     <motion.header
       className={styles.header}
@@ -21,15 +26,18 @@ export default function Header() {
             SerenitySpace
           </Link>
         </div>
-        <div className={styles.navLinks}>
+        <button className={styles.hamburger} onClick={toggleMenu}>
+          {isOpen ? <X className={styles.icon} /> : <Menu className={styles.icon} />}
+        </button>
+        <div className={`${styles.navLinks} ${isOpen ? styles.navLinksOpen : ''}`}>
           <div className={styles.linkGroup}>
-            <Link href="/" className={styles.navLink}>
+            <Link href="/" className={styles.navLink} onClick={toggleMenu}>
               Home
             </Link>
-            <Link href="/forum" className={styles.navLink}>
+            <Link href="/forum" className={styles.navLink} onClick={toggleMenu}>
               Forum
             </Link>
-            <Link href="/chat" className={styles.navLink}>
+            <Link href="/chat" className={styles.navLink} onClick={toggleMenu}>
               Chat
             </Link>
           </div>
