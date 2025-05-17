@@ -1,12 +1,12 @@
 
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
 
 .footer {
-  background: rgba(255, 255, 255, 0.8);
-  backdrop-filter: blur(8px);
-  padding: 1rem;
+  background: #1E1E1F;
+  border-top: 1px solid #343536;
+  padding: 0.75rem;
   text-align: center;
-  font-family: 'Open Sans', sans-serif;
-  font-size: 0.875rem;
-  color: #1C2526;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.75rem;
+  color: #B0B3B8;
 }
