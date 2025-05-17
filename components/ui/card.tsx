@@ -1,15 +1,13 @@
 // components/ui/card.tsx
 import * as React from 'react';
 import { cn } from '@/lib/utils';
+import styles from './card.module.css';
 
 const Card = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
   ({ className, ...props }, ref) => (
     <div
       ref={ref}
-      className={cn(
-        'rounded-2xl border-none bg-white shadow-md transition-all duration-200',
-        className
-      )}
+      className={cn(styles.card, className)}
       {...props}
     />
   )
@@ -20,7 +18,7 @@ const CardHeader = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDiv
   ({ className, ...props }, ref) => (
     <div
       ref={ref}
-      className={cn('flex flex-col space-y-1.5 p-6', className)}
+      className={cn(styles.cardHeader, className)}
       {...props}
     />
   )
@@ -31,10 +29,7 @@ const CardTitle = React.forwardRef<HTMLParagraphElement, React.HTMLAttributes<HT
   ({ className, ...props }, ref) => (
     <h3
       ref={ref}
-      className={cn(
-        'text-xl font-semibold leading-none tracking-tight text-gray-800',
-        className
-      )}
+      className={cn(styles.cardTitle, className)}
       {...props}
     />
   )
@@ -43,7 +38,7 @@ CardTitle.displayName = 'CardTitle';
 
 const CardContent = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
   ({ className, ...props }, ref) => (
-    <div ref={ref} className={cn('p-6 pt-0', className)} {...props} />
+    <div ref={ref} className={cn(styles.cardContent, className)} {...props} />
   )
 );
 CardContent.displayName = 'CardContent';

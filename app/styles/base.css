@@ -1,0 +1,66 @@
+// app/styles/base.css
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-family: 'Lora', serif;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+body {
+  background: linear-gradient(to bottom, #FDF6E3, #E0F4FA);
+  color: #1C2526;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Lora', serif;
+  color: #2C6E7A;
+}
+
+p, span, a, li {
+  font-family: 'Open Sans', sans-serif;
+}
+
+a {
+  text-decoration: none;
+  color: #2C6E7A;
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: #5BA199;
+}
+
+button, input, textarea, [role="button"] {
+  outline: none;
+  transition: box-shadow 0.2s ease;
+}
+
+button:focus, input:focus, textarea:focus, [role="button"]:focus {
+  box-shadow: 0 0 0 2px #2C6E7A, 0 0 0 4px rgba(44, 110, 122, 0.2);
+}
+
+[role="log"] {
+  scroll-behavior: smooth;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #FDF6E3;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #5BA199;
+  border-radius: 4px;
+}

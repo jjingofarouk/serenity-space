@@ -3,7 +3,10 @@
 import { Message } from '@/lib/types';
 import { format } from 'date-fns';
 import { motion } from 'framer-motion';
-import { useAuth } from '@/lib/auth';
+import { Timestamp } from 'firebase/firestore';
+import { useState, useEffect } from 'react';
+import { doc, getDoc } from 'firebase/firestore';
+import { db } from '@/lib/firebase';
 
 interface ChatMessageProps {
   message: Message;
@@ -11,10 +14,22 @@ interface ChatMessageProps {
 }
 
 export default function ChatMessage({ message, currentUserId }: ChatMessageProps) {
+  const [displayName, setDisplayName] = useState('Unknown User');
   const isCurrentUser = message.userId === currentUserId;
-  const timestamp = message.createdAt?.toDate
+  const timestamp = message.createdAt instanceof Timestamp
     ? format(message.createdAt.toDate(), 'HH:mm')
     : format(new Date(message.createdAt), 'HH:mm');
+
+  useEffect(() => {
+    const fetchDisplayName = async () => {
+      const userRef = doc(db, 'users', message.userId);
+      const userDoc = await getDoc(userRef);
+      if (userDoc.exists()) {
+        setDisplayName(userDoc.data().displayName || 'Unknown User');
+      }
+    };
+    fetchDisplayName();
+  }, [message.userId]);
 
   return (
     <motion.div
@@ -23,7 +38,7 @@ export default function ChatMessage({ message, currentUserId }: ChatMessageProps
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
       role="listitem"
-      aria-label={`Message from ${isCurrentUser ? 'you' : 'another user'}`}
+      aria-label={`Message from ${isCurrentUser ? 'you' : displayName}`}
     >
       <div
         className={`max-w-[70%] p-4 rounded-xl shadow-sm ${
@@ -38,7 +53,7 @@ export default function ChatMessage({ message, currentUserId }: ChatMessageProps
             isCurrentUser ? 'text-teal-100' : 'text-gray-500'
           } block mt-1 text-right`}
         >
-          {timestamp}
+          {displayName} • {timestamp}
         </span>
       </div>
     </motion.div>

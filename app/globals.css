@@ -1,29 +1,5 @@
-/* app/globals.css */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-@layer base {
-  html {
-    font-family: 'Inter', sans-serif;
-  }
-
-  body {
-    @apply bg-gray-100 text-gray-900 antialiased;
-  }
-
-  /* Custom focus styles for accessibility */
-  [role="button"],
-  button,
-  input,
-  textarea {
-    @apply focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2;
-  }
-
-  /* Smooth scroll for chat */
-  [role="log"] {
-    scroll-behavior: smooth;
-  }
-}
+@import url('https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600&family=Open+Sans:wght@400;500;600&display=swap');
+@import './styles/base.css';
+@import './styles/components.css';
+@import './styles/utils.css';

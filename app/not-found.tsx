@@ -3,29 +3,32 @@
 import Link from 'next/link';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { motion } from 'framer-motion';
+import { Home } from 'lucide-react';
+import styles from './styles/not-found.module.css';
 
 export default function NotFound() {
   return (
     <motion.div
-      className="max-w-4xl mx-auto"
+      className={styles.container}
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
+      transition={{ duration: 0.6, ease: 'easeOut' }}
     >
-      <Card className="bg-gradient-to-br from-blue-50 to-teal-50 border-none shadow-xl rounded-2xl">
-        <CardHeader className="border-b border-gray-200 pb-4">
-          <CardTitle className="text-3xl font-semibold text-blue-800 tracking-tight">
+      <Card className={styles.card}>
+        <CardHeader className={styles.cardHeader}>
+          <CardTitle className={styles.cardTitle}>
+            <Home className={styles.icon} />
             Page Not Found
           </CardTitle>
-        </CardHeader>
-        <CardContent className="pt-6">
-          <p className="text-gray-700 text-lg leading-relaxed">
-            Sorry, the page you’re looking for doesn’t exist.
+          <p className={styles.subtitle}>
+            The page you’re looking for doesn’t exist.
           </p>
-          <Link
-            href="/"
-            className="inline-block mt-6 text-teal-600 hover:text-teal-700 font-medium text-base transition-colors duration-200"
-          >
+        </CardHeader>
+        <CardContent className={styles.cardContent}>
+          <p className={styles.description}>
+            It seems you’ve wandered off the path. Let’s get you back to SerenitySpace.
+          </p>
+          <Link href="/" className={styles.buttonPrimary}>
             Return to Home
           </Link>
         </CardContent>

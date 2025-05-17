@@ -6,6 +6,7 @@ import PostCard from '@/components/PostCard';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { motion } from 'framer-motion';
+import styles from './page.module.css';
 
 export default function Forum() {
   const { data: posts, isLoading } = useQuery({
@@ -15,16 +16,16 @@ export default function Forum() {
 
   return (
     <motion.div
-      className="space-y-8 max-w-4xl mx-auto"
+      className={styles.container}
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
     >
-      <div className="flex justify-between items-center">
-        <h1 className="text-3xl font-semibold text-blue-800 tracking-tight">Forum</h1>
+      <div className={styles.header}>
+        <h1 className={styles.title}>Forum</h1>
         <Link href="/forum/new">
           <Button
-            className="bg-teal-600 hover:bg-teal-700 text-white font-medium rounded-xl px-6 transition-all duration-200 ease-in-out transform hover:scale-105"
+            className={styles.button}
             aria-label="Create new post"
           >
             New Post
@@ -32,9 +33,9 @@ export default function Forum() {
         </Link>
       </div>
       {isLoading ? (
-        <p className="text-gray-700 text-lg text-center">Loading...</p>
+        <p className={styles.loading}>Loading...</p>
       ) : (
-        <div className="space-y-6">
+        <div className={styles.posts}>
           {posts?.map((post, index) => (
             <motion.div
               key={post.id}

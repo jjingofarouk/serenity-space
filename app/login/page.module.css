@@ -1,0 +1,177 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600&family=Open+Sans:wght@400;500;600&display=swap');
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(to bottom right, #E6F5F7, #F0F9F5);
+  padding: 1rem;
+}
+
+.card {
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(8px);
+  border-radius: 1.5rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+}
+
+.cardHeader {
+  padding: 2rem 2rem 1rem;
+  text-align: center;
+}
+
+.logoContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.logoIcon {
+  width: 2rem;
+  height: 2rem;
+}
+
+.logo {
+  font-family: 'Lora', serif;
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: #1C2526;
+  text-decoration: none;
+  margin-left: 0.5rem;
+}
+
+.cardTitle {
+  font-family: 'Lora', serif;
+  font-size: 1.75rem;
+  font-weight: 500;
+  color: #1C2526;
+  margin-bottom: 0.5rem;
+}
+
+.subtitle {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 0.875rem;
+  color: #1C2526;
+  opacity: 0.8;
+}
+
+.cardContent {
+  padding: 1.5rem 2rem;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.label {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #1C2526;
+}
+
+.input {
+  padding: 0.75rem 1rem;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 0.875rem;
+  color: #1C2526;
+  background: #FFFFFF;
+  border: 1px solid #D1D5DB;
+  border-radius: 0.75rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.input:focus {
+  border-color: #2C6E7A;
+  box-shadow: 0 0 0 2px rgba(44, 110, 122, 0.2);
+  outline: none;
+}
+
+.input::placeholder {
+  color: #6B7280;
+}
+
+.error {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 0.75rem;
+  color: #DC2626;
+  text-align: center;
+}
+
+.submitButton {
+  background: #2C6E7A;
+  color: #FFFFFF;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
+  padding: 0.75rem;
+  border-radius: 0.75rem;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.submitButton:hover {
+  background: #5BA199;
+  transform: scale(1.02);
+}
+
+.switchContainer {
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.switchText {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 0.875rem;
+  color: #1C2526;
+}
+
+.switchLink {
+  font-weight: 500;
+  color: #2C6E7A;
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-left: 0.25rem;
+  transition: color 0.2s ease;
+}
+
+.switchLink:hover {
+  color: #5BA199;
+}
+
+.terms {
+  margin-top: 1.5rem;
+  text-align: center;
+}
+
+.termsText {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 0.75rem;
+  color: #1C2526;
+  opacity: 0.8;
+}
+
+.termsLink {
+  color: #2C6E7A;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.termsLink:hover {
+  color: #5BA199;
+}
