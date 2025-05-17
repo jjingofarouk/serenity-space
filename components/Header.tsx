@@ -1,9 +1,8 @@
 'use client';
 import Link from 'next/link';
 import Image from 'next/image';
-import AuthButton from './AuthButton';
 import { motion } from 'framer-motion';
-import { Menu, X, Home, Clipboard, MessageSquare, Folder, HelpCircle, FileText, Lock, Handshake, Sun, Moon } from 'lucide-react';
+import { Menu, X, Home, Clipboard, MessageSquare, Folder, HelpCircle, FileText, Lock, Handshake, Sun, Moon, LogIn } from 'lucide-react';
 import { useState } from 'react';
 import { useTheme } from '@/lib/ThemeContext';
 import styles from './Header.module.css';
@@ -80,6 +79,9 @@ export default function Header() {
             <Link href="/user-agreement" className={styles.navLink} onClick={toggleMenu}>
               <Handshake className={styles.icon} size={16} /> User Agreement
             </Link>
+            <Link href="/login" className={styles.navLink} onClick={toggleMenu}>
+              <LogIn className={styles.icon} size={16} /> Login
+            </Link>
             <button
               onClick={toggleTheme}
               className={styles.navLink}
@@ -88,9 +90,6 @@ export default function Header() {
               {theme === 'light' ? <Moon className={styles.icon} size={16} /> : <Sun className={styles.icon} size={16} />}
               {theme === 'light' ? 'Dark Mode' : 'Light Mode'}
             </button>
-          </div>
-          <div className={styles.authContainer}>
-            <AuthButton />
           </div>
         </div>
         {isOpen && <div className={styles.overlay} onClick={toggleMenu}></div>}
