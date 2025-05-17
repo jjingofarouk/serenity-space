@@ -1,16 +1,31 @@
-// lib/auth.ts
-import { auth } from './firebase';
-import { signInWithPopup, GoogleAuthProvider, signInAnonymously, signOut } from 'firebase/auth';
+'use client';
+import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
+import { getAuth, onAuthStateChanged, signInAnonymously as firebaseSignInAnonymously } from 'firebase/auth';
+import { firebaseApp } from './firebase'; // adjust if needed
 
-export async function signInWithGoogle() {
-  const provider = new GoogleAuthProvider();
-  await signInWithPopup(auth, provider);
-}
+const AuthContext = createContext<any>(null);
 
-export async function signInAnonymouslyUser() {
-  await signInAnonymously(auth);
-}
+export const AuthProvider = ({ children }: { children: ReactNode }) => {
+  const [user, setUser] = useState<any>(null);
 
-export async function signOutUser() {
-  await signOut(auth);
-}
+  useEffect(() => {
+    const auth = getAuth(firebaseApp);
+    const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
+      setUser(firebaseUser);
+    });
+    return () => unsubscribe();
+  }, []);
+
+  return <AuthContext.Provider value={{ user }}>{children}</AuthContext.Provider>;
+};
+
+// ✅ Export useAuth hook
+export const useAuth = () => {
+  return useContext(AuthContext);
+};
+
+// ✅ Export signInAnonymously function
+export const signInAnonymously = async () => {
+  const auth = getAuth(firebaseApp);
+  await firebaseSignInAnonymously(auth);
+};
