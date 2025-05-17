@@ -1,10 +1,9 @@
-// components/Header.tsx
 'use client';
 import Link from 'next/link';
 import Image from 'next/image';
 import AuthButton from './AuthButton';
 import { motion } from 'framer-motion';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, Home, Clipboard, MessageSquare, Folder, HelpCircle, FileText, Lock, Handshake } from 'lucide-react';
 import { useState } from 'react';
 import styles from './Header.module.css';
 
@@ -47,28 +46,28 @@ export default function Header() {
           </div>
           <div className={styles.navLinks}>
             <Link href="/" className={styles.navLink} onClick={toggleMenu}>
-              🏠 Home
+              <Home className={styles.icon} size={16} /> Home
             </Link>
             <Link href="/forum" className={styles.navLink} onClick={toggleMenu}>
-              📋 Forum
+              <Clipboard className={styles.icon} size={16} /> Forum
             </Link>
             <Link href="/chat" className={styles.navLink} onClick={toggleMenu}>
-              💬 Chat
+              <MessageSquare className={styles.icon} size={16} /> Chat
             </Link>
             <Link href="/topics" className={styles.navLink} onClick={toggleMenu}>
-              🗂️ Topics
+              <Folder className={styles.icon} size={16} /> Topics
             </Link>
             <Link href="/help" className={styles.navLink} onClick={toggleMenu}>
-              ❓ Help
+              <HelpCircle className={styles.icon} size={16} /> Help
             </Link>
             <Link href="/rules" className={styles.navLink} onClick={toggleMenu}>
-              📜 Rules
+              <FileText className={styles.icon} size={16} /> Rules
             </Link>
             <Link href="/privacy" className={styles.navLink} onClick={toggleMenu}>
-              🔒 Privacy Policy
+              <Lock className={styles.icon} size={16} /> Privacy Policy
             </Link>
             <Link href="/user-agreement" className={styles.navLink} onClick={toggleMenu}>
-              🤝 User Agreement
+              <Handshake className={styles.icon} size={16} /> User Agreement
             </Link>
           </div>
           <div className={styles.authContainer}>
