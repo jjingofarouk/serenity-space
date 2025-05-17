@@ -1,4 +1,3 @@
-
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
 
 .header {
@@ -35,6 +34,15 @@
 .logoIcon {
   width: 1.5rem;
   height: 1.5rem;
+  border-radius: 8px;
+  object-fit: cover;
+  box-shadow: 0 2px 4px var(--shadow);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.logoIcon:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px var(--shadow);
 }
 
 .controls {
@@ -130,11 +138,6 @@
 .navLink:hover {
   color: var(--accent);
   background: var(--background);
-}
-
-.authContainer {
-  padding: 1rem;
-  border-top: 1px solid var(--border);
 }
 
 .overlay {
