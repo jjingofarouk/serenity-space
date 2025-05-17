@@ -11,6 +11,7 @@ import { db } from '@/lib/firebase';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Timestamp } from 'firebase/firestore';
 import { Send, MessageCircle } from 'lucide-react';
+import Link from 'next/link';
 import styles from './page.module.css';
 
 export default function Chat() {
