@@ -1,48 +1,42 @@
 
-@import url('https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600&family=Open+Sans:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
 
 .card {
-  background: linear-gradient(to bottom right, #E6F5F7, #F0F9F5);
-  border: none;
-  border-radius: 1.5rem;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-  transition: box-shadow 0.2s ease;
-}
-
-.card:hover {
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  background: #262627;
+  border: 1px solid #343536;
+  border-radius: 0.5rem;
 }
 
 .cardHeader {
-  padding-bottom: 1rem;
+  padding: 0.75rem 1rem;
 }
 
 .cardTitle {
-  font-family: 'Lora', serif;
-  font-size: 1.25rem;
+  font-family: 'Inter', sans-serif;
+  font-size: 1.125rem;
   font-weight: 500;
-  color: #2C6E7A;
+  color: #D7DADC;
 }
 
 .titleLink {
   text-decoration: none;
-  color: #2C6E7A;
+  color: #D7DADC;
   transition: color 0.2s ease;
 }
 
 .titleLink:hover {
-  color: #5BA199;
+  color: #2C6E7A;
 }
 
 .cardContent {
-  padding: 1.5rem;
+  padding: 0.75rem 1rem;
 }
 
 .content {
-  font-family: 'Open Sans', sans-serif;
-  font-size: 1rem;
-  color: #1C2526;
-  line-height: 1.75;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.875rem;
+  color: #B0B3B8;
+  line-height: 1.5;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
@@ -50,8 +44,8 @@
 }
 
 .meta {
-  font-family: 'Open Sans', sans-serif;
-  font-size: 0.875rem;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.75rem;
   color: #6B7280;
-  margin-top: 0.75rem;
+  margin-top: 0.5rem;
 }
