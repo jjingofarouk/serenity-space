@@ -2,22 +2,44 @@
 'use client';
 import { useAuth, signInWithGoogle, signInAnonymously, signOutUser } from '@/lib/auth';
 import { Button } from './ui/button';
+import { motion } from 'framer-motion';
 
 export default function AuthButton() {
   const { user } = useAuth();
 
-  return user ? (
-    <Button onClick={signOutUser} className="bg-gray-500 hover:bg-gray-600">
-      Sign Out
-    </Button>
-  ) : (
-    <div className="space-x-2">
-      <Button onClick={signInWithGoogle} className="bg-blue-600 hover:bg-blue-700">
-        Sign In with Google
-      </Button>
-      <Button onClick={signInAnonymously} className="bg-gray-500 hover:bg-gray-600">
-        Sign In Anonymously
-      </Button>
-    </div>
+  return (
+    <motion.div
+      initial={{ opacity: 0, x: 20 }}
+      animate={{ opacity: 1, x: 0 }}
+      transition={{ duration: 0.3 }}
+      className="flex gap-3"
+    >
+      {user ? (
+        <Button
+          onClick={signOutUser}
+          className="bg-gray-600 hover:bg-gray-700 text-white font-medium rounded-xl px-6 py-2 transition-all duration-200 ease-in-out transform hover:scale-105"
+          aria-label="Sign out"
+        >
+          Sign Out
+        </Button>
+      ) : (
+        <>
+          <Button
+            onClick={signInWithGoogle}
+            className="bg-teal-600 hover:bg-teal-700 text-white font-medium rounded-xl px-6 py-2 transition-all duration-200 ease-in-out transform hover:scale-105"
+            aria-label="Sign in with Google"
+          >
+            Sign In with Google
+          </Button>
+          <Button
+            onClick={signInAnonymously}
+            className="bg-gray-600 hover:bg-gray-700 text-white font-medium rounded-xl px-6 py-2 transition-all duration-200 ease-in-out transform hover:scale-105"
+            aria-label="Sign in anonymously"
+          >
+            Sign In Anonymously
+          </Button>
+        </>
+      )}
+    </motion.div>
   );
 }
