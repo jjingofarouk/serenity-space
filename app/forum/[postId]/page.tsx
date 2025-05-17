@@ -5,6 +5,8 @@ import { getPost } from '@/lib/firestore';
 import CommentSection from '@/components/CommentSection';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { motion } from 'framer-motion';
+import { Timestamp } from 'firebase/firestore';
+import { format } from 'date-fns';
 
 export default function PostPage({ params }: { params: { postId: string } }) {
   const { data: post, isLoading } = useQuery({
@@ -27,6 +29,10 @@ export default function PostPage({ params }: { params: { postId: string } }) {
     );
   }
 
+  const createdAt = post.createdAt instanceof Timestamp
+    ? format(post.createdAt.toDate(), 'MMM d, yyyy')
+    : format(new Date(post.createdAt), 'MMM d, yyyy');
+
   return (
     <motion.div
       className="max-w-4xl mx-auto"
@@ -43,7 +49,7 @@ export default function PostPage({ params }: { params: { postId: string } }) {
         <CardContent className="pt-6 space-y-4">
           <p className="text-gray-700 text-lg leading-relaxed">{post.content}</p>
           <p className="text-sm text-gray-500">
-            Posted by User {post.userId} on {post.createdAt.toDateString()}
+            Posted by User {post.userId} on {createdAt}
           </p>
           <CommentSection postId={params.postId} />
         </CardContent>
