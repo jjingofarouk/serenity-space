@@ -1,0 +1,19 @@
+/* app/globals.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --primary: #4B5EAA; /* Soft blue */
+  --secondary: #D6E6FF; /* Light blue */
+  --background: #F1F5F9; /* Light gray */
+  --text: #1F2937; /* Dark gray */
+}
+
+body {
+  @apply bg-background text-text;
+}
+
+.container {
+  @apply max-w-4xl mx-auto;
+}
