@@ -4,8 +4,8 @@
 .header {
   position: sticky;
   top: 0;
-  background: #F0F9F5;
-  border-bottom: 1px solid #D1D5DB;
+  background: var(--card-background);
+  border-bottom: 1px solid var(--border);
   z-index: 100;
 }
 
@@ -27,7 +27,7 @@
   font-family: 'Inter', sans-serif;
   font-size: 1.5rem;
   font-weight: 600;
-  color: #1C2526;
+  color: var(--text-primary);
   text-decoration: none;
   margin-left: 0.5rem;
 }
@@ -35,6 +35,25 @@
 .logoIcon {
   width: 1.5rem;
   height: 1.5rem;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.themeToggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  color: var(--text-primary);
+  transition: color 0.2s ease;
+}
+
+.themeToggle:hover {
+  color: var(--accent);
 }
 
 .hamburger {
@@ -48,7 +67,7 @@
 .icon {
   width: 1.5rem;
   height: 1.5rem;
-  color: #1C2526;
+  color: var(--text-primary);
 }
 
 .sidebar {
@@ -57,8 +76,8 @@
   right: 0;
   width: 280px;
   height: 100%;
-  background: #F0F9F5;
-  border-left: 1px solid #D1D5DB;
+  background: var(--card-background);
+  border-left: 1px solid var(--border);
   display: flex;
   flex-direction: column;
   transform: translateX(100%);
@@ -75,7 +94,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 1rem;
-  border-bottom: 1px solid #D1D5DB;
+  border-bottom: 1px solid var(--border);
 }
 
 .closeButton {
@@ -98,7 +117,7 @@
   font-family: 'Inter', sans-serif;
   font-size: 1rem;
   font-weight: 500;
-  color: #1C2526;
+  color: var(--text-primary);
   text-decoration: none;
   padding: 0.75rem 1rem;
   border-radius: 0.5rem;
@@ -109,13 +128,13 @@
 }
 
 .navLink:hover {
-  color: #2C6E7A;
-  background: #E6F5F7;
+  color: var(--accent);
+  background: var(--background);
 }
 
 .authContainer {
   padding: 1rem;
-  border-top: 1px solid #D1D5DB;
+  border-top: 1px solid var(--border);
 }
 
 .overlay {
@@ -135,5 +154,9 @@
 
   .sidebar {
     display: flex;
+  }
+
+  .themeToggle {
+    display: none;
   }
 }
