@@ -38,7 +38,7 @@ export default function Header() {
         </button>
         <div className={`${styles.sidebar} ${isOpen ? styles.sidebarOpen : ''}`}>
           <div className={styles.sidebarHeader}>
-            <Link href="/" className={styles.logo} праці
+            <Link href="/" className={styles.logo}>
               SerenitySpace
             </Link>
             <button className={styles.closeButton} onClick={toggleMenu} aria-label="Close menu">
