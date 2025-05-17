@@ -10,6 +10,7 @@ import { format } from 'date-fns';
 import { useState, useEffect } from 'react';
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
+import styles from './page.module.css';
 
 export default function PostPage({ params }: { params: { postId: string } }) {
   const [displayName, setDisplayName] = useState('Unknown User');
@@ -33,16 +34,12 @@ export default function PostPage({ params }: { params: { postId: string } }) {
 
   if (isLoading) {
     return (
-      <p className="text-gray-700 text-lg text-center max-w-4xl mx-auto">
-        Loading...
-      </p>
+      <p className={styles.loading}>Loading...</p>
     );
   }
   if (!post) {
     return (
-      <p className="text-gray-700 text-lg text-center max-w-4xl mx-auto">
-        Post not found.
-      </p>
+      <p className={styles.error}>Post not found.</p>
     );
   }
 
@@ -52,20 +49,18 @@ export default function PostPage({ params }: { params: { postId: string } }) {
 
   return (
     <motion.div
-      className="max-w-4xl mx-auto"
+      className={styles.container}
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
     >
-      <Card className="bg-gradient-to-br from-blue-50 to-teal-50 border-none shadow-xl rounded-2xl">
-        <CardHeader className="border-b border-gray-200 pb-4">
-          <CardTitle className="text-3xl font-semibold text-blue-800 tracking-tight">
-            {post.title}
-          </CardTitle>
+      <Card className={styles.card}>
+        <CardHeader className={styles.cardHeader}>
+          <CardTitle className={styles.cardTitle}>{post.title}</CardTitle>
         </CardHeader>
-        <CardContent className="pt-6 space-y-4">
-          <p className="text-gray-700 text-lg leading-relaxed">{post.content}</p>
-          <p className="text-sm text-gray-500">
+        <CardContent className={styles.cardContent}>
+          <p className={styles.content}>{post.content}</p>
+          <p className={styles.meta}>
             Posted by {displayName} on {createdAt}
           </p>
           <CommentSection postId={params.postId} />
