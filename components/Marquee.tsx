@@ -1,3 +1,4 @@
+// components/Marquee.tsx
 'use client';
 import { useEffect, useRef } from 'react';
 import styles from './Marquee.module.css';
@@ -16,12 +17,19 @@ export default function Marquee() {
       .map(msg => `<span>${msg}</span>`)
       .join(' ');
 
-    const totalWidth = shuffledMessages.length * 200;
+    const totalWidth = shuffledMessages.length * 300;
     marquee.style.setProperty('--marquee-width', `${totalWidth}px`);
-    marquee.style.setProperty('--marquee-duration', `${totalWidth / 40}s`);
+    marquee.style.setProperty('--marquee-duration', `${totalWidth / 50}s`);
+
+    const handleMouseEnter = () => marquee.style.animationPlayState = 'paused';
+    const handleMouseLeave = () => marquee.style.animationPlayState = 'running';
+    marquee.addEventListener('mouseenter', handleMouseEnter);
+    marquee.addEventListener('mouseleave', handleMouseLeave);
 
     return () => {
       marquee.innerHTML = '';
+      marquee.removeEventListener('mouseenter', handleMouseEnter);
+      marquee.removeEventListener('mouseleave', handleMouseLeave);
     };
   }, []);
 
