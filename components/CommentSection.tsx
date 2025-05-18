@@ -1,17 +1,43 @@
-// components/CommentSection.tsx
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useAuth } from '@/lib/auth';
-import { addComment } from '@/lib/firestore';
+import { addComment, getComments } from '@/lib/firestore';
 import { Button } from './ui/button';
 import { Textarea } from './ui/textarea';
 import { motion } from 'framer-motion';
 import { Timestamp } from 'firebase/firestore';
+import { doc, getDoc } from 'firebase/firestore';
+import { db } from '@/lib/firebase';
+import { formatDistanceToNow } from 'date-fns';
 import styles from './CommentSection.module.css';
+
+interface Comment {
+  id: string;
+  postId: string;
+  text: string;
+  userId: string;
+  createdAt: Timestamp | Date;
+}
 
 export default function CommentSection({ postId }: { postId: string }) {
   const [comment, setComment] = useState('');
+  const [comments, setComments] = useState<(Comment & { displayName: string })[]>([]);
   const { user } = useAuth();
+
+  useEffect(() => {
+    const unsubscribe = getComments(postId, async (comments) => {
+      const enrichedComments = await Promise.all(
+        comments.map(async (comment) => {
+          const userRef = doc(db, 'users', comment.userId);
+          const userDoc = await getDoc(userRef);
+          const displayName = userDoc.exists() ? userDoc.data().displayName : 'Anonymous';
+          return { ...comment, displayName };
+        })
+      );
+      setComments(enrichedComments);
+    });
+    return () => unsubscribe();
+  }, [postId]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -38,6 +64,31 @@ export default function CommentSection({ postId }: { postId: string }) {
       transition={{ duration: 0.5 }}
     >
       <h3 className={styles.title}>Comments</h3>
+      <div className={styles.commentsList}>
+        {comments.length > 0 ? (
+          comments.map((comment) => (
+            <motion.div
+              key={comment.id}
+              className={styles.comment}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3 }}
+            >
+              <div className={styles.commentHeader}>
+                <span className={styles.displayName}>{comment.displayName}</span>
+                <span className={styles.timestamp}>
+                  {formatDistanceToNow(comment.createdAt instanceof Timestamp ? comment.createdAt.toDate() : comment.createdAt, {
+                    addSuffix: true,
+                  })}
+                </span>
+              </div>
+              <p className={styles.commentText}>{comment.text}</p>
+            </motion.div>
+          ))
+        ) : (
+          <p className={styles.noComments}>No comments yet. Be the first to comment!</p>
+        )}
+      </div>
       {user ? (
         <form onSubmit={handleSubmit} className={styles.form}>
           <Textarea
@@ -60,9 +111,9 @@ export default function CommentSection({ postId }: { postId: string }) {
       ) : (
         <p className={styles.signInPrompt}>
           Please{' '}
-          <a href="/login" className={styles.signInLink}>
+          <Link href="/login" className={styles.signInLink}>
             sign in
-          </a>{' '}
+          </Link>{' '}
           to comment.
         </p>
       )}
