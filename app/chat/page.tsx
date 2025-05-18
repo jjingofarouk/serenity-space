@@ -25,7 +25,7 @@ export default function Chat() {
       const updatedMessages = snapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
-      }));
+      })).sort((a, b) => a.createdAt.toMillis() - b.createdAt.toMillis());
       setMessages(updatedMessages);
     });
     return () => unsubscribe();
@@ -60,7 +60,7 @@ export default function Chat() {
         transition={{ duration: 0.5 }}
       >
         <MessageCircle size={24} />
-        <h1>Community Chat</h1>
+        <h1>Community Thread</h1>
       </motion.div>
       <Card className={styles.card}>
         <CardContent className={styles.cardContent}>
@@ -90,16 +90,16 @@ export default function Chat() {
                 <Textarea
                   value={newMessage}
                   onChange={(e) => setNewMessage(e.target.value)}
-                  placeholder="Type your message..."
+                  placeholder="Add to the thread..."
                   className={styles.textarea}
                   rows={2}
-                  aria-label="Message input"
+                  aria-label="Thread input"
                 />
                 <Button
                   type="submit"
                   className={styles.sendButton}
                   disabled={!newMessage.trim()}
-                  aria-label="Send message"
+                  aria-label="Post to thread"
                 >
                   <Send size={18} />
                 </Button>
@@ -116,7 +116,7 @@ export default function Chat() {
               <Link href="/login" className={styles.signInLink}>
                 sign in
               </Link>{' '}
-              to join the conversation.
+              to join the thread.
             </motion.p>
           )}
         </CardContent>
