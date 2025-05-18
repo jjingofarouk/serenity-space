@@ -20,7 +20,12 @@ export default function PostPage({ params }: { params: { postId: string } }) {
     queryKey: ['post', params.postId],
     queryFn: () => getPost(params.postId),
   });
-  const [reactions, setReactions] = useState<{ love: number; like: number; support: number; userReaction?: string }>({
+  const [reactions, setReactions] = useState<{
+    love: number;
+    like: number;
+    support: number;
+    userReaction?: 'love' | 'like' | 'support';
+  }>({
     love: 0,
     like: 0,
     support: 0,
@@ -60,12 +65,15 @@ export default function PostPage({ params }: { params: { postId: string } }) {
         }));
       } else {
         await addReaction(params.postId, user.uid, reactionType);
-        setReactions((prev) => ({
-          ...prev,
-          [reactionType]: prev[reactionType] + 1,
-          [prev.userReaction || '']: prev.userReaction ? prev[prev.userReaction] - 1 : prev[prev.userReaction || ''],
-          userReaction: reactionType,
-        }));
+        setReactions((prev) => {
+          const newReactions = { ...prev };
+          if (prev.userReaction) {
+            newReactions[prev.userReaction] = prev[prev.userReaction] - 1;
+          }
+          newReactions[reactionType] = prev[reactionType] + 1;
+          newReactions.userReaction = reactionType;
+          return newReactions;
+        });
       }
     } catch (error: any) {
       console.error('Failed to update reaction:', error);
@@ -113,7 +121,7 @@ export default function PostPage({ params }: { params: { postId: string } }) {
               onClick={() => handleReaction('like')}
               aria-label="Like reaction"
             >
-              👍 {reactions.like > 0 ? reactions.love : ''}
+              👍 {reactions.like > 0 ? reactions.like : ''}
             </button>
             <button
               className={`${styles.reactionButton} ${reactions.userReaction === 'support' ? styles.active : ''}`}
