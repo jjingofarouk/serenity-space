@@ -1,137 +1,129 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
 
-.container {
-  margin-top: 1.5rem;
-  padding: 1rem;
-  background: var(--card-background);
-  border-radius: 0.75rem;
-  box-shadow: 0 2px 8px var(--shadow);
+/* components/CommentSection.module.css */
+.commentSection {
+  margin-top: 24px;
+  padding: 16px;
 }
 
 .title {
-  font-family: 'Inter', sans-serif;
   font-size: 1.25rem;
-  font-weight: 500;
-  color: var(--text-primary);
-  margin-bottom: 1rem;
+  font-weight: 600;
+  color: #1e3a8a; /* Blue-800 */
+  letter-spacing: -0.025em;
+  margin-bottom: 16px;
 }
 
-.commentsList {
+.commentsContainer {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
-  margin-bottom: 1.5rem;
+  gap: 16px;
 }
 
-.comment {
-  background: var(--background);
-  border: 1px solid var(--border);
-  border-radius: 0.5rem;
-  padding: 0.75rem;
+.commentCard {
+  background-color: #f3f4f6; /* Gray-100 */
+  padding: 16px;
+  border-radius: 12px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease-in-out;
+}
+
+.commentCard:hover {
+  transform: scale(1.02);
 }
 
 .commentHeader {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 0.5rem;
+  margin-bottom: 8px;
 }
 
 .displayName {
-  font-family: 'Inter', sans-serif;
-  font-size: 0.875rem;
   font-weight: 500;
-  color: var(--text-primary);
+  color: #1f2937; /* Gray-800 */
 }
 
 .timestamp {
-  font-family: 'Inter', sans-serif;
-  font-size: 0.75rem;
-  color: var(--text-tertiary);
+  font-size: 0.875rem;
+  color: #6b7280; /* Gray-500 */
 }
 
 .commentText {
-  font-family: 'Inter', sans-serif;
-  font-size: 0.875rem;
-  color: var(--text-secondary);
+  color: #4b5563; /* Gray-700 */
+  font-size: 1rem;
   line-height: 1.5;
 }
 
 .noComments {
-  font-family: 'Inter', sans-serif;
-  font-size: 0.875rem;
-  color: var(--text-secondary);
-  text-align: center;
+  color: #6b7280; /* Gray-500 */
+  font-size: 1rem;
 }
 
 .form {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: 16px;
+  margin-top: 24px;
 }
 
 .textarea {
   width: 100%;
-  min-height: 80px;
-  padding: 0.75rem;
-  font-family: 'Inter', sans-serif;
-  font-size: 0.875rem;
-  color: var(--text-primary);
-  background: var(--card-background);
-  border: 1px solid var(--border);
-  border-radius: 0.5rem;
+  padding: 12px;
+  border: 1px solid #d1d5db; /* Gray-300 */
+  border-radius: 12px;
+  font-size: 1rem;
+  color: #1f2937; /* Gray-800 */
+  background-color: #ffffff;
   resize: vertical;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  min-height: 96px;
+  transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 }
 
 .textarea:focus {
   outline: none;
-  border-color: var(--accent);
-  box-shadow: 0 0 0 2px rgba(44, 110, 122, 0.2);
+  border-color: #0d9488; /* Teal-500 */
+  box-shadow: 0 0 0 2px rgba(13, 148, 136, 0.2);
 }
 
 .textarea::placeholder {
-  color: var(--text-secondary);
+  color: #6b7280; /* Gray-500 */
 }
 
-.button {
-  background: var(--accent);
-  color: #FFFFFF;
-  font-family: 'Inter', sans-serif;
-  font-size: 0.875rem;
+.submitButton {
+  background-color: #0d9488; /* Teal-600 */
+  color: #ffffff;
   font-weight: 500;
-  padding: 0.75rem;
-  border-radius: 0.5rem;
+  padding: 8px 24px;
+  border-radius: 12px;
   border: none;
+  font-size: 1rem;
   cursor: pointer;
-  transition: background-color 0.2s ease, transform 0.2s ease;
-  align-self: flex-end;
+  transition: background-color 0.2s ease-in-out, transform 0.2s ease-in-out;
 }
 
-.button:hover {
-  background: var(--accent-hover);
-  transform: scale(1.02);
+.submitButton:hover {
+  background-color: #0f766e; /* Teal-700 */
+  transform: scale(1.05);
 }
 
-.button:disabled {
-  opacity: 0.5;
-  pointer-events: none;
+.submitButton:disabled {
+  background-color: #d1d5db; /* Gray-300 */
+  cursor: not-allowed;
+  transform: none;
 }
 
 .signInPrompt {
-  font-family: 'Inter', sans-serif;
-  font-size: 0.875rem;
-  color: var(--text-secondary);
-  text-align: center;
+  color: #6b7280; /* Gray-500 */
+  font-size: 1rem;
 }
 
 .signInLink {
-  color: var(--accent);
-  font-weight: 500;
+  color: #0d9488; /* Teal-600 */
   text-decoration: none;
-  transition: color 0.2s ease;
+  transition: color 0.2s ease-in-out;
 }
 
 .signInLink:hover {
-  color: var(--accent-hover);
+  color: #0f766e; /* Teal-700 */
+  text-decoration: underline;
 }
