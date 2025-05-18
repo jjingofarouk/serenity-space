@@ -107,7 +107,7 @@ export default function PostPage({ params }: { params: { postId: string } }) {
         <CardContent className={styles.cardContent}>
           <p className={styles.content}>{post.content}</p>
           <p className={styles.meta}>
-            Posted by {displayName} on {createdAt}
+            {displayName} • {createdAt}
           </p>
           <div className={styles.actions}>
             <button
