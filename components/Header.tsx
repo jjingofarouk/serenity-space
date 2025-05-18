@@ -1,20 +1,37 @@
-// components/Header.tsx
 'use client';
 import Link from 'next/link';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
-import { Menu, X, Home, Clipboard, MessageSquare, Folder, HelpCircle, FileText, Lock, Handshake, Sun, Moon, LogIn, LogOut } from 'lucide-react';
-import { useState } from 'react';
+import { Menu, X, Home, Clipboard, MessageSquare, Folder, HelpCircle, FileText, Lock, Handshake, Sun, Moon, LogIn, LogOut, User } from 'lucide-react';
+import { useState, useEffect } from 'react';
 import { useTheme } from '@/lib/ThemeContext';
 import { useAuth } from '@/lib/auth';
+import { doc, getDoc } from 'firebase/firestore';
+import { db } from '@/lib/firebase';
 import styles from './Header.module.css';
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
+  const [displayName, setDisplayName] = useState('Guest');
   const { theme, toggleTheme } = useTheme();
   const { user, signOutUser } = useAuth();
 
   const toggleMenu = () => setIsOpen(!isOpen);
+
+  useEffect(() => {
+    const fetchDisplayName = async () => {
+      if (user) {
+        const userRef = doc(db, 'users', user.uid);
+        const userDoc = await getDoc(userRef);
+        if (userDoc.exists()) {
+          setDisplayName(userDoc.data().displayName || 'Guest');
+        }
+      } else {
+        setDisplayName('Guest');
+      }
+    };
+    fetchDisplayName();
+  }, [user]);
 
   const handleLogout = async () => {
     try {
@@ -44,6 +61,10 @@ export default function Header() {
           <Link href="/" className={styles.logo}>
             SerenitySpace
           </Link>
+        </div>
+        <div className={styles.userContainer}>
+          <User size={20} className={styles.userIcon} />
+          <span className={styles.userName}>{displayName}</span>
         </div>
         <div className={styles.controls}>
           <div className={styles.desktopNav}>
