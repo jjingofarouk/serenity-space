@@ -1,54 +1,81 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
 
+/* app/forum/[postId]/page.module.css */
 .container {
-  max-width: 48rem;
+  max-width: 800px;
   margin: 0 auto;
+  padding: 24px;
 }
 
 .card {
-  background: var(--card-background);
-  border: 1px solid var(--border);
-  border-radius: 0.5rem;
+  background: linear-gradient(145deg, #ffffff, #e6ecef);
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .cardHeader {
-  padding: 0.75rem 1rem;
-  border-bottom: 1px solid var(--border);
+  padding: 16px;
+  border-bottom: 1px solid #e5e7eb;
 }
 
 .cardTitle {
-  font-family: 'Inter', sans-serif;
-  font-size: 1.25rem;
-  font-weight: 500;
-  color: var(--text-primary);
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: #1e3a8a;
+  letter-spacing: -0.025em;
 }
 
 .cardContent {
-  padding: 1rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
+  padding: 16px;
 }
 
 .content {
-  font-family: 'Inter', sans-serif;
-  font-size: 0.875rem;
-  color: var(--text-secondary);
-  line-height: 1.5;
+  color: #4b5563;
+  font-size: 1.125rem;
+  line-height: 1.75;
+  margin-bottom: 16px;
 }
 
 .meta {
-  font-family: 'Inter', sans-serif;
-  font-size: 0.75rem;
-  color: var(--text-tertiary);
+  color: #6b7280;
+  font-size: 0.875rem;
+  margin-bottom: 24px;
 }
 
-.loading,
-.error {
-  font-family: 'Inter', sans-serif;
-  font-size: 1rem;
-  color: var(--text-secondary);
+.actions {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.reactionButton {
+  background: none;
+  border: none;
+  font-size: 1.25rem;
+  cursor: pointer;
+  color: #6b7280;
+  transition: transform 0.2s ease-in-out, color 0.2s ease-in-out;
+}
+
+.reactionButton:hover {
+  transform: scale(1.2);
+  color: #0d9488;
+}
+
+.reactionButton.active {
+  color: #0d9488;
+  font-weight: 600;
+}
+
+.loading {
   text-align: center;
-  max-width: 48rem;
-  margin: 0 auto;
+  color: #6b7280;
+  font-size: 1.125rem;
+  padding: 48px;
+}
+
+.error {
+  text-align: center;
+  color: #dc2626;
+  font-size: 1.125rem;
+  padding: 48px;
 }
