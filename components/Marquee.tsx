@@ -1,29 +1,7 @@
 'use client';
 import { useEffect, useRef } from 'react';
 import styles from './Marquee.module.css';
-
-const encouragingMessages = [
-  "It's never too late to start anew.",
-  "You are stronger than you know.",
-  "Every step forward counts.",
-  "Your journey is uniquely yours.",
-  "Breathe, you're doing great.",
-  "Hope is always within reach.",
-  "You are enough just as you are.",
-  "Small progress is still progress.",
-  "You have the power to change.",
-  "Today is a fresh start.",
-  "Your feelings are valid.",
-  "Keep going, you've got this.",
-  "One day at a time is enough.",
-  "You are not alone in this.",
-  "Your courage inspires others.",
-  "Healing takes time, be patient.",
-  "You are capable of great things.",
-  "Your story isn't over yet.",
-  "Embrace your inner strength.",
-  "Every moment is a new chance."
-];
+import { encouragingMessages } from '@/lib/encouragingMessages';
 
 export default function Marquee() {
   const marqueeRef = useRef<HTMLDivElement>(null);
@@ -32,17 +10,15 @@ export default function Marquee() {
     const marquee = marqueeRef.current;
     if (!marquee) return;
 
-    // Shuffle messages for random order
     const shuffledMessages = [...encouragingMessages].sort(() => Math.random() - 0.5);
-    // Create two sets for seamless looping
+
     marquee.innerHTML = [...shuffledMessages, ...shuffledMessages]
       .map(msg => `<span>${msg}</span>`)
       .join(' ');
 
-    // CSS handles smooth animation
-    const totalWidth = shuffledMessages.length * 200; // Adjusted width per message
+    const totalWidth = shuffledMessages.length * 200;
     marquee.style.setProperty('--marquee-width', `${totalWidth}px`);
-    marquee.style.setProperty('--marquee-duration', `${totalWidth / 40}s`); // Adjusted speed
+    marquee.style.setProperty('--marquee-duration', `${totalWidth / 40}s`);
 
     return () => {
       marquee.innerHTML = '';
