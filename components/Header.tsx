@@ -106,9 +106,15 @@ export default function Header() {
         </div>
         <div className={`${styles.sidebar} ${isOpen ? styles.sidebarOpen : ''}`}>
           <div className={styles.sidebarHeader}>
-            <Link href="/" className={styles.logo}>
-              SerenitySpace
-            </Link>
+            <div className={styles.sidebarUser}>
+              <Link href="/" className={styles.logo}>
+                SerenitySpace
+              </Link>
+              <div className={styles.sidebarUserName}>
+                <User size={16} className={styles.userIcon} />
+                <span>{displayName}</span>
+              </div>
+            </div>
             <button className={styles.closeButton} onClick={toggleMenu} aria-label="Close menu">
               <X className={styles.icon} />
             </button>
