@@ -1,7 +1,7 @@
 // app/forum/[postId]/page.tsx
 'use client';
 import { useQuery } from '@tanstack/react-query';
-import { getPost } from '@/lib/firestore';
+import { getPost, getReactions, addReaction, removeReaction } from '@/lib/firestore';
 import CommentSection from '@/components/CommentSection';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { motion } from 'framer-motion';
@@ -10,13 +10,20 @@ import { format } from 'date-fns';
 import { useState, useEffect } from 'react';
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
+import { useAuth } from '@/lib/auth';
 import styles from './page.module.css';
 
 export default function PostPage({ params }: { params: { postId: string } }) {
   const [displayName, setDisplayName] = useState('Unknown User');
+  const { user } = useAuth();
   const { data: post, isLoading } = useQuery({
     queryKey: ['post', params.postId],
     queryFn: () => getPost(params.postId),
+  });
+  const [reactions, setReactions] = useState<{ love: number; like: number; support: number; userReaction?: string }>({
+    love: 0,
+    like: 0,
+    support: 0,
   });
 
   useEffect(() => {
@@ -29,18 +36,48 @@ export default function PostPage({ params }: { params: { postId: string } }) {
         }
       };
       fetchDisplayName();
+
+      const fetchReactions = async () => {
+        const reactionData = await getReactions(params.postId);
+        setReactions(reactionData);
+      };
+      fetchReactions();
     }
-  }, [post]);
+  }, [post, params.postId]);
+
+  const handleReaction = async (reactionType: 'love' | 'like' | 'support') => {
+    if (!user) {
+      alert('Please sign in to react.');
+      return;
+    }
+    try {
+      if (reactions.userReaction === reactionType) {
+        await removeReaction(params.postId, user.uid);
+        setReactions((prev) => ({
+          ...prev,
+          [reactionType]: prev[reactionType] - 1,
+          userReaction: undefined,
+        }));
+      } else {
+        await addReaction(params.postId, user.uid, reactionType);
+        setReactions((prev) => ({
+          ...prev,
+          [reactionType]: prev[reactionType] + 1,
+          [prev.userReaction || '']: prev.userReaction ? prev[prev.userReaction] - 1 : prev[prev.userReaction || ''],
+          userReaction: reactionType,
+        }));
+      }
+    } catch (error: any) {
+      console.error('Failed to update reaction:', error);
+      alert('Failed to update reaction.');
+    }
+  };
 
   if (isLoading) {
-    return (
-      <p className={styles.loading}>Loading...</p>
-    );
+    return <p className={styles.loading}>Loading...</p>;
   }
   if (!post) {
-    return (
-      <p className={styles.error}>Post not found.</p>
-    );
+    return <p className={styles.error}>Post not found.</p>;
   }
 
   const createdAt = post.createdAt instanceof Timestamp
@@ -63,6 +100,29 @@ export default function PostPage({ params }: { params: { postId: string } }) {
           <p className={styles.meta}>
             Posted by {displayName} on {createdAt}
           </p>
+          <div className={styles.actions}>
+            <button
+              className={`${styles.reactionButton} ${reactions.userReaction === 'love' ? styles.active : ''}`}
+              onClick={() => handleReaction('love')}
+              aria-label="Love reaction"
+            >
+              ❤️ {reactions.love > 0 ? reactions.love : ''}
+            </button>
+            <button
+              className={`${styles.reactionButton} ${reactions.userReaction === 'like' ? styles.active : ''}`}
+              onClick={() => handleReaction('like')}
+              aria-label="Like reaction"
+            >
+              👍 {reactions.like > 0 ? reactions.love : ''}
+            </button>
+            <button
+              className={`${styles.reactionButton} ${reactions.userReaction === 'support' ? styles.active : ''}`}
+              onClick={() => handleReaction('support')}
+              aria-label="Support reaction"
+            >
+              🤗 {reactions.support > 0 ? reactions.support : ''}
+            </button>
+          </div>
           <CommentSection postId={params.postId} />
         </CardContent>
       </Card>
