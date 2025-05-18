@@ -12,6 +12,24 @@
   box-sizing: border-box;
 }
 
+.marquee {
+  width: 100%;
+  background: var(--card-background);
+  border-bottom: 1px solid var(--border);
+  padding: 0.25rem 0;
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.marqueeItem {
+  display: inline-block;
+  padding: 0 1.5rem;
+  color: var(--accent);
+}
+
 .header {
   display: flex;
   justify-content: space-between;
@@ -72,38 +90,44 @@
 }
 
 @media (max-width: 768px) {
+  .marquee {
+    font-size: 0.75rem;
+  }
+  .marqueeItem {
+    padding: 0 1rem;
+  }
   .header {
     padding: 0.5rem;
   }
-
   .title {
     font-size: 1.25rem;
   }
-
   .button {
     padding: 0.4rem 0.8rem;
     font-size: 0.8125rem;
   }
-
   .posts {
     padding: 0 0.5rem;
   }
 }
 
 @media (max-width: 480px) {
+  .marquee {
+    font-size: 0.6875rem;
+  }
+  .marqueeItem {
+    padding: 0 0.75rem;
+  }
   .header {
     padding: 0.25rem;
   }
-
   .title {
     font-size: 1.125rem;
   }
-
   .button {
     padding: 0.3rem 0.6rem;
     font-size: 0.75rem;
   }
-
   .posts {
     padding: 0 0.25rem;
   }
