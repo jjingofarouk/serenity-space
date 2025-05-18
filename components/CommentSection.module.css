@@ -12,6 +12,51 @@
   margin-bottom: 24px;
 }
 
+.commentForm {
+  margin-bottom: 24px;
+}
+
+.commentInput {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--card-background);
+  color: var(--text-primary);
+  font-size: 1rem;
+  resize: vertical;
+  margin-bottom: 12px;
+  transition: border-color 0.2s ease;
+}
+
+.commentInput:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.submitButton {
+  background-color: var(--accent);
+  color: var(--text-primary);
+  font-weight: 500;
+  padding: 8px 20px;
+  border-radius: 8px;
+  border: none;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.submitButton:hover {
+  background-color: var(--accent-hover);
+  transform: scale(1.05);
+}
+
+.submitButton:disabled {
+  background-color: var(--border);
+  cursor: not-allowed;
+  transform: none;
+}
+
 .loading {
   color: var(--text-secondary);
   font-size: 1rem;
