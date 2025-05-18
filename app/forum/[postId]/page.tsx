@@ -11,6 +11,7 @@ import { useState, useEffect } from 'react';
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 import { useAuth } from '@/lib/auth';
+import { Heart, ThumbsUp, Users } from 'lucide-react';
 import styles from './page.module.css';
 
 export default function PostPage({ params }: { params: { postId: string } }) {
@@ -114,21 +115,24 @@ export default function PostPage({ params }: { params: { postId: string } }) {
               onClick={() => handleReaction('love')}
               aria-label="Love reaction"
             >
-              ❤️ {reactions.love > 0 ? reactions.love : ''}
+              <Heart className="w-5 h-5" fill={reactions.userReaction === 'love' ? '#DC2626' : 'none'} stroke={reactions.userReaction === 'love' ? '#DC2626' : 'currentColor'} />
+              {reactions.love > 0 ? reactions.love : ''}
             </button>
             <button
               className={`${styles.reactionButton} ${reactions.userReaction === 'like' ? styles.active : ''}`}
               onClick={() => handleReaction('like')}
               aria-label="Like reaction"
             >
-              👍 {reactions.like > 0 ? reactions.like : ''}
+              <ThumbsUp className="w-5 h-5" />
+              {reactions.like > 0 ? reactions.like : ''}
             </button>
             <button
               className={`${styles.reactionButton} ${reactions.userReaction === 'support' ? styles.active : ''}`}
               onClick={() => handleReaction('support')}
               aria-label="Support reaction"
             >
-              🤗 {reactions.support > 0 ? reactions.support : ''}
+              <Users className="w-5 h-5" />
+              {reactions.support > 0 ? reactions.support : ''}
             </button>
           </div>
           <CommentSection postId={params.postId} />
