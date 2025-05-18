@@ -32,27 +32,21 @@ export default function Marquee() {
     const marquee = marqueeRef.current;
     if (!marquee) return;
 
-    // Duplicate messages to create seamless loop
-    const messages = [...encouragingMessages, ...encouragingMessages];
-    marquee.innerHTML = messages.map(msg => `<span>${msg}</span>`).join(' ');
+    // Shuffle messages for random order
+    const shuffledMessages = [...encouragingMessages].sort(() => Math.random() - 0.5);
+    // Create two sets of messages for seamless looping
+    marquee.innerHTML = [...shuffledMessages, ...shuffledMessages]
+      .map(msg => `<span>${msg}</span>`)
+      .join(' ');
 
-    // Randomize starting position
-    const randomStart = Math.floor(Math.random() * encouragingMessages.length);
-    marquee.scrollLeft = randomStart * 300; // Approximate width per message
+    // CSS handles the smooth animation
+    const totalWidth = shuffledMessages.length * 300; // Approximate width per message
+    marquee.style.setProperty('--marquee-width', `${totalWidth}px`);
+    marquee.style.setProperty('--marquee-duration', `${totalWidth / 50}s`); // Adjust speed
 
-    // Animation logic
-    let animationFrame: number;
-    const animate = () => {
-      if (marquee.scrollLeft >= marquee.scrollWidth / 2) {
-        marquee.scrollLeft -= marquee.scrollWidth / 2;
-      } else {
-        marquee.scrollLeft += 1;
-      }
-      animationFrame = requestAnimationFrame(animate);
+    return () => {
+      marquee.innerHTML = '';
     };
-
-    animationFrame = requestAnimationFrame(animate);
-    return () => cancelAnimationFrame(animationFrame);
   }, []);
 
   return (
