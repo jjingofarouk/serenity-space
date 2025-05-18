@@ -1,10 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
 
+/* Ensure the root container fits the viewport */
 .container {
   width: 100%;
-  max-width: 1200px; /* Consistent with header */
-  margin: 0 auto; /* Center the container */
-  padding: 0 1rem; /* Add padding for smaller screens */
+  max-width: 1200px; /* Constrain for larger screens */
+  margin: 0 auto; /* Center on larger screens */
+  padding: 0 0.5rem; /* Reduced padding for mobile */
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -13,10 +14,11 @@
   overflow-x: hidden; /* Prevent horizontal overflow */
 }
 
+/* Marquee optimization to prevent overflow */
 .marquee {
   width: 100%;
-  max-width: 1200px; /* Match header's max-width */
-  margin: 0 auto; /* Center the marquee */
+  max-width: 1200px; /* Match container */
+  margin: 0 auto; /* Center */
   background: var(--card-background);
   border-bottom: 1px solid var(--border);
   padding: 0.25rem 0;
@@ -25,31 +27,34 @@
   font-weight: 500;
   color: var(--text-primary);
   box-sizing: border-box;
-  overflow: hidden; /* Prevent text overflow */
-  white-space: nowrap; /* Ensure single-line text for marquee effect */
-  text-overflow: ellipsis; /* Truncate overflowing text */
+  overflow: hidden; /* Prevent overflow */
+  white-space: nowrap; /* Single line */
+  text-overflow: ellipsis; /* Truncate if too long */
 }
 
+/* Marquee items */
 .marqueeItem {
   display: inline-block;
-  padding: 0 1.5rem;
+  padding: 0 1rem;
   color: var(--accent);
-  white-space: nowrap; /* Prevent wrapping within items */
+  white-space: nowrap; /* Prevent wrapping */
 }
 
+/* Header styling to span full width on mobile */
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.75rem 0; /* Remove side padding to align with container */
+  padding: 0.75rem 0; /* Vertical padding only */
   margin: 0;
-  max-width: 1200px;
-  width: 100%;
+  width: 100%; /* Full width */
+  max-width: 1200px; /* Constrain on larger screens */
   box-sizing: border-box;
   margin-left: auto;
   margin-right: auto;
 }
 
+/* Title styling */
 .title {
   font-family: 'Inter', sans-serif;
   font-size: 1.5rem;
@@ -58,6 +63,7 @@
   margin: 0;
 }
 
+/* Button styling */
 .button {
   background: var(--accent);
   color: #ffffff;
@@ -75,6 +81,7 @@
   background: var(--accent-hover);
 }
 
+/* Loading text */
 .loading {
   font-family: 'Inter', sans-serif;
   font-size: 1rem;
@@ -83,40 +90,54 @@
   margin-top: 2rem;
 }
 
+/* Posts section (forum content) */
 .posts {
   display: flex;
   flex-direction: column;
   gap: 1rem;
   flex-grow: 1;
+  width: 100%; /* Full width */
+  max-width: 1200px; /* Constrain on larger screens */
   padding: 0; /* Rely on container padding */
-  max-width: 1200px;
-  width: 100%;
   box-sizing: border-box;
   margin-left: auto;
   margin-right: auto;
+  overflow-x: hidden; /* Prevent overflow */
 }
 
-/* Ensure viewport meta tag is respected */
+/* Ensure forum post content wraps and doesn't overflow */
+.posts > * {
+  width: 100%; /* Ensure child elements don't exceed parent */
+  box-sizing: border-box;
+  word-wrap: break-word; /* Break long words */
+  overflow-wrap: break-word; /* Modern equivalent */
+}
+
+/* Viewport meta tag compatibility */
 @-ms-viewport {
   width: device-width;
 }
 
+/* Tablet and smaller screens */
 @media (max-width: 768px) {
   .container {
-    padding: 0 0.5rem; /* Reduced padding for tablets */
+    padding: 0 0.5rem; /* Consistent padding */
+    max-width: 100%; /* Full width on smaller screens */
   }
 
   .marquee {
     font-size: 0.75rem;
     padding: 0.25rem 0;
+    max-width: 100%; /* Full width */
   }
 
   .marqueeItem {
-    padding: 0 1rem;
+    padding: 0 0.75rem;
   }
 
   .header {
     padding: 0.5rem 0;
+    max-width: 100%; /* Full width */
   }
 
   .title {
@@ -129,27 +150,32 @@
   }
 
   .posts {
+    max-width: 100%; /* Full width */
     padding: 0;
   }
 }
 
+/* Mobile screens */
 @media (max-width: 480px) {
   .container {
-    padding: 0 0.25rem; /* Minimal padding for mobile */
+    padding: 0 0.25rem; /* Minimal padding */
+    max-width: 100%;
   }
 
   .marquee {
     font-size: 0.6875rem;
     padding: 0.25rem 0;
+    max-width: 100%;
   }
 
   .marqueeItem {
-    padding: 0 0.75rem;
+    padding: 0 0.5rem;
   }
 
   .header {
     padding: 0.25rem 0;
-    flex-wrap: wrap; /* Allow wrapping for very small screens */
+    max-width: 100%;
+    flex-wrap: wrap; /* Allow wrapping */
     gap: 0.5rem;
   }
 
@@ -163,6 +189,7 @@
   }
 
   .posts {
+    max-width: 100%;
     padding: 0;
   }
 }
