@@ -65,7 +65,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const signInAnonymously = async () => {
     try {
-      await signInAnonymously(auth);
+      await signInAnonymously();
     } catch (error) {
       console.error('Anonymous sign-in failed:', error);
       throw error;
