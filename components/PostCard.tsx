@@ -85,6 +85,25 @@ export default function PostCard({ post }: { post: Post }) {
     }
   };
 
+  const handleQuickComment = async (text: string) => {
+    if (!user) {
+      alert('Please sign in to comment.');
+      return;
+    }
+    try {
+      await addComment({
+        postId: post.id,
+        text,
+        userId: user.uid,
+        createdAt: Timestamp.now(),
+      });
+      setShowQuickComments(false);
+    } catch (error: any) {
+      console.error('Failed to add quick comment:', error);
+      alert('Failed to add comment.');
+    }
+  };
+
   const createdAt = post.createdAt instanceof Timestamp
     ? format(post.createdAt.toDate(), 'MMM d, yyyy')
     : format(post.createdAt, 'MMM d, yyyy');
@@ -115,11 +134,7 @@ export default function PostCard({ post }: { post: Post }) {
               onClick={() => handleReaction('love')}
               aria-label="Love reaction"
             >
-              <Heart
-                className={styles.icon}
-                fill={reactions.userReaction === 'love' ? '#DC2626' : 'none'}
-                stroke={reactions.userReaction === 'love' ? '#DC2626' : 'currentColor'}
-              />
+              <Heart className="w-5 h-5" fill={reactions.userReaction === 'love' ? '#DC2626' : 'none'} stroke={reactions.userReaction === 'love' ? '#DC2626' : 'currentColor'} />
               {reactions.love > 0 ? reactions.love : ''}
             </button>
             <button
@@ -127,7 +142,7 @@ export default function PostCard({ post }: { post: Post }) {
               onClick={() => handleReaction('like')}
               aria-label="Like reaction"
             >
-              <ThumbsUp className={styles.icon} />
+              <ThumbsUp className="w-5 h-5" />
               {reactions.like > 0 ? reactions.like : ''}
             </button>
             <button
@@ -135,7 +150,7 @@ export default function PostCard({ post }: { post: Post }) {
               onClick={() => handleReaction('support')}
               aria-label="Support reaction"
             >
-              <Users className={styles.icon} />
+              <Users className="w-5 h-5" />
               {reactions.support > 0 ? reactions.support : ''}
             </button>
             <button
