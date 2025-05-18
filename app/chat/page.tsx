@@ -14,8 +14,15 @@ import { Send, MessageCircle } from 'lucide-react';
 import Link from 'next/link';
 import styles from './page.module.css';
 
+interface Message {
+  id: string;
+  text: string;
+  userId: string;
+  createdAt: Timestamp;
+}
+
 export default function Chat() {
-  const [messages, setMessages] = useState<any[]>([]);
+  const [messages, setMessages] = useState<Message[]>([]);
   const [newMessage, setNewMessage] = useState('');
   const { user } = useAuth();
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -25,7 +32,7 @@ export default function Chat() {
       const updatedMessages = snapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
-      })).sort((a, b) => a.createdAt.toMillis() - b.createdAt.toMillis());
+      } as Message)).sort((a, b) => a.createdAt.toMillis() - b.createdAt.toMillis());
       setMessages(updatedMessages);
     });
     return () => unsubscribe();
