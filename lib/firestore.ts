@@ -74,7 +74,7 @@ export async function removeReaction(postId: string, userId: string) {
   await deleteDoc(reactionRef);
 }
 
-export async function getReactions(postId: string): Promise<{
+export async function getReactions(postId: string, userId?: string): Promise<{
   love: number;
   like: number;
   support: number;
@@ -87,6 +87,6 @@ export async function getReactions(postId: string): Promise<{
     love: reactions.filter((r) => r === 'love').length,
     like: reactions.filter((r) => r === 'like').length,
     support: reactions.filter((r) => r === 'support').length,
-    userReaction: snapshot.docs.find((doc) => doc.id === userId)?.data().reactionType,
+    userReaction: userId ? snapshot.docs.find((doc) => doc.id === userId)?.data().reactionType : undefined,
   };
 }
