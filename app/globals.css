@@ -1,33 +1,37 @@
 /* styles/globals.css */
 :root {
-  --background: #FDFAF5; /* Warm off-white for a softer base */
-  --card-background: linear-gradient(135deg, rgba(255, 245, 245, 0.95), rgba(240, 255, 250, 0.95)); /* Subtle gradient with hints of red and teal */
-  --text-primary: #2D2320; /* Rich brown-black for strong contrast */
-  --text-secondary: #6D6A75; /* Warm gray for secondary elements */
-  --accent: #FF5E5B; /* Vibrant coral-red for buttons and highlights */
-  --accent-hover: #FF8C89; /* Lighter coral for hover states */
-  --secondary-accent: #4DB6AC; /* Teal as a complementary accent */
-  --border: #E0D9D5; /* Soft beige-gray for borders */
-  --error: #D32F2F; /* Rich red for errors, close to current */
-  --shadow: rgba(0, 0, 0, 0.12); /* Slightly darker shadow for depth */
+  --background: #FDFAF5;
+  --card-background: linear-gradient(135deg, rgba(255, 245, 245, 0.95), rgba(240, 255, 250, 0.95));
+  --text-primary: #2D2320;
+  --text-secondary: #6D6A75;
+  --accent: #FF5E5B;
+  --accent-hover: #FF8C89;
+  --secondary-accent: #4DB6AC;
+  --border: #E0D9D5;
+  --error: #D32F2F;
+  --shadow: rgba(0, 0, 0, 0.12);
 }
 
-[data-theme='dark'] {
-  --background: #1A1C22; /* Deep charcoal for a modern dark base */
-  --card-background: linear-gradient(135deg, rgba(50, 55, 65, 0.95), rgba(40, 60, 60, 0.95)); /* Gradient with dark gray and teal undertones */
-  --text-primary: #F7ECEB; /* Soft off-white for readability */
-  --text-secondary: #A8A5B0; /* Light warm gray for secondary text */
-  --accent: #FF8C89; /* Lighter coral for dark mode vibrancy */
-  --accent-hover: #FF5E5B; /* Vibrant coral for hover states */
-  --secondary-accent: #66C4BB; /* Brighter teal for contrast */
-  --border: #545863; /* Dark gray-blue for borders */
-  --error: #EF5350; /* Slightly brighter red for errors */
-  --shadow: rgba(0, 0, 0, 0.35); /* Stronger shadow for dark mode */
+[data-theme='dark'], .dark {
+  --background: #1A1C22;
+  --card-background: linear-gradient(135deg, rgba(50, 55, 65, 0.95), rgba(40, 60, 60, 0.95));
+  --text-primary: #F7ECEB;
+  --text-secondary: #A8A5B0;
+  --accent: #FF8C89;
+  --accent-hover: #FF5E5B;
+  --secondary-accent: #66C4BB;
+  --border: #545863;
+  --error: #EF5350;
+  --shadow: rgba(0, 0, 0, 0.35);
 }
 
 body {
   margin: 0;
   background: var(--background);
   color: var(--text-primary);
-  transition: background 0.3s ease, color 0.3s ease;
+  font-family: 'Inter', sans-serif;
+}
+
+html, body {
+  transition: none;
 }
