@@ -1,7 +1,6 @@
-/* styles/globals.css */
 :root {
   --background: #FDFAF5;
-  --card-background: linear-gradient(135deg, rgba(255, 245, 245, 0.95), rgba(240, 255, 250, 0.95));
+  --card-background: #FFFFFF;
   --text-primary: #2D2320;
   --text-secondary: #6D6A75;
   --accent: #FF5E5B;
@@ -14,7 +13,7 @@
 
 [data-theme='dark'], .dark {
   --background: #1A1C22;
-  --card-background: linear-gradient(135deg, rgba(50, 55, 65, 0.95), rgba(40, 60, 60, 0.95));
+  --card-background: #2A2E38;
   --text-primary: #F7ECEB;
   --text-secondary: #A8A5B0;
   --accent: #FF8C89;
