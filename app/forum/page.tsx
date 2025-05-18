@@ -1,4 +1,3 @@
-// app/forum/page.tsx
 'use client';
 import { useQuery } from '@tanstack/react-query';
 import { getPosts } from '@/lib/firestore';
@@ -6,6 +5,7 @@ import PostCard from '@/components/PostCard';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { motion } from 'framer-motion';
+import Marquee from '@/components/Marquee';
 import styles from './page.module.css';
 
 export default function Forum() {
@@ -21,6 +21,7 @@ export default function Forum() {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
     >
+      <Marquee />
       <div className={styles.header}>
         <h1 className={styles.title}>Forum</h1>
         <Link href="/forum/new">
