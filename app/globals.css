@@ -1,26 +1,28 @@
-
+/* styles/globals.css */
 :root {
-  --background: #E6F5F7;
-  --card-background: rgba(255, 255, 255, 0.9);
-  --text-primary: #1C2526;
-  --text-secondary: #6B7280;
-  --accent: #2C6E7A;
-  --accent-hover: #5BA199;
-  --border: #D1D5DB;
-  --error: #DC2626;
-  --shadow: rgba(0, 0, 0, 0.1);
+  --background: #FDFAF5; /* Warm off-white for a softer base */
+  --card-background: linear-gradient(135deg, rgba(255, 245, 245, 0.95), rgba(240, 255, 250, 0.95)); /* Subtle gradient with hints of red and teal */
+  --text-primary: #2D2320; /* Rich brown-black for strong contrast */
+  --text-secondary: #6D6A75; /* Warm gray for secondary elements */
+  --accent: #FF5E5B; /* Vibrant coral-red for buttons and highlights */
+  --accent-hover: #FF8C89; /* Lighter coral for hover states */
+  --secondary-accent: #4DB6AC; /* Teal as a complementary accent */
+  --border: #E0D9D5; /* Soft beige-gray for borders */
+  --error: #D32F2F; /* Rich red for errors, close to current */
+  --shadow: rgba(0, 0, 0, 0.12); /* Slightly darker shadow for depth */
 }
 
 [data-theme='dark'] {
-  --background: #1C2526;
-  --card-background: rgba(45, 55, 72, 0.9);
-  --text-primary: #F3F4F6;
-  --text-secondary: #9CA3AF;
-  --accent: #5BA199;
-  --accent-hover: #2C6E7A;
-  --border: #4B5563;
-  --error: #F87171;
-  --shadow: rgba(0, 0, 0, 0.3);
+  --background: #1A1C22; /* Deep charcoal for a modern dark base */
+  --card-background: linear-gradient(135deg, rgba(50, 55, 65, 0.95), rgba(40, 60, 60, 0.95)); /* Gradient with dark gray and teal undertones */
+  --text-primary: #F7ECEB; /* Soft off-white for readability */
+  --text-secondary: #A8A5B0; /* Light warm gray for secondary text */
+  --accent: #FF8C89; /* Lighter coral for dark mode vibrancy */
+  --accent-hover: #FF5E5B; /* Vibrant coral for hover states */
+  --secondary-accent: #66C4BB; /* Brighter teal for contrast */
+  --border: #545863; /* Dark gray-blue for borders */
+  --error: #EF5350; /* Slightly brighter red for errors */
+  --shadow: rgba(0, 0, 0, 0.35); /* Stronger shadow for dark mode */
 }
 
 body {
