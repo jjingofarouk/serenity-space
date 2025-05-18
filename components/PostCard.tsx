@@ -10,6 +10,7 @@ import { format } from 'date-fns';
 import { Timestamp } from 'firebase/firestore';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { motion } from 'framer-motion';
+import { Heart, ThumbsUp, Users } from 'lucide-react';
 import styles from './PostCard.module.css';
 
 interface Post {
@@ -84,25 +85,6 @@ export default function PostCard({ post }: { post: Post }) {
     }
   };
 
-  const handleQuickComment = async (text: string) => {
-    if (!user) {
-      alert('Please sign in to comment.');
-      return;
-    }
-    try {
-      await addComment({
-        postId: post.id,
-        text,
-        userId: user.uid,
-        createdAt: Timestamp.now(),
-      });
-      setShowQuickComments(false);
-    } catch (error: any) {
-      console.error('Failed to add quick comment:', error);
-      alert('Failed to add comment.');
-    }
-  };
-
   const createdAt = post.createdAt instanceof Timestamp
     ? format(post.createdAt.toDate(), 'MMM d, yyyy')
     : format(post.createdAt, 'MMM d, yyyy');
@@ -133,21 +115,28 @@ export default function PostCard({ post }: { post: Post }) {
               onClick={() => handleReaction('love')}
               aria-label="Love reaction"
             >
-              ❤️ {reactions.love > 0 ? reactions.love : ''}
+              <Heart
+                className={styles.icon}
+                fill={reactions.userReaction === 'love' ? '#DC2626' : 'none'}
+                stroke={reactions.userReaction === 'love' ? '#DC2626' : 'currentColor'}
+              />
+              {reactions.love > 0 ? reactions.love : ''}
             </button>
             <button
               className={`${styles.reactionButton} ${reactions.userReaction === 'like' ? styles.active : ''}`}
               onClick={() => handleReaction('like')}
               aria-label="Like reaction"
             >
-              👍 {reactions.like > 0 ? reactions.like : ''}
+              <ThumbsUp className={styles.icon} />
+              {reactions.like > 0 ? reactions.like : ''}
             </button>
             <button
               className={`${styles.reactionButton} ${reactions.userReaction === 'support' ? styles.active : ''}`}
               onClick={() => handleReaction('support')}
               aria-label="Support reaction"
             >
-              🤗 {reactions.support > 0 ? reactions.support : ''}
+              <Users className={styles.icon} />
+              {reactions.support > 0 ? reactions.support : ''}
             </button>
             <button
               className={styles.quickCommentButton}
