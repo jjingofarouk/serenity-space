@@ -5,6 +5,8 @@ import PostCard from '@/components/PostCard';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { motion } from 'framer-motion';
+import Marquee from 'react-fast-marquee';
+import { encouragingMessages } from '@/lib/encouragingMessages';
 import styles from './page.module.css';
 
 export default function Forum() {
@@ -13,6 +15,9 @@ export default function Forum() {
     queryFn: getPosts,
   });
 
+  // Shuffle messages for random order
+  const shuffledMessages = [...encouragingMessages].sort(() => Math.random() - 0.5);
+
   return (
     <motion.div
       className={styles.container}
@@ -20,6 +25,18 @@ export default function Forum() {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
     >
+      <Marquee
+        className={styles.marquee}
+        speed={30}
+        gradient={false}
+        pauseOnHover
+      >
+        {shuffledMessages.map((msg, index) => (
+          <span key={index} className={styles.marqueeItem}>
+            {msg}
+          </span>
+        ))}
+      </Marquee>
       <div className={styles.header}>
         <h1 className={styles.title}>Forum</h1>
         <Link href="/forum/new">
