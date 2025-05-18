@@ -131,7 +131,7 @@ export default function CommentSection({ postId }: CommentSectionProps) {
             <li key={comment.id} className={styles.comment}>
               <p>{comment.text}</p>
               <p className={styles.meta}>
-                Posted by {userDisplayNames[comment.userId] || 'Unknown User'} on{' '}
+                {userDisplayNames[comment.userId] || 'Unknown User'} •{' '}
                 {comment.createdAt instanceof Timestamp
                   ? format(comment.createdAt.toDate(), 'MMM d, yyyy')
                   : format(new Date(comment.createdAt), 'MMM d, yyyy')}
