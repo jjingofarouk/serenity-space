@@ -25,29 +25,44 @@ interface Comment {
 export default function CommentSection({ postId }: { postId: string }) {
   const [comment, setComment] = useState('');
   const [comments, setComments] = useState<Comment[]>([]);
+  const [error, setError] = useState<string | null>(null);
   const { user } = useAuth();
 
   useEffect(() => {
-    console.log('Listening for comments on postId:', postId);
-    const unsubscribe = getComments(postId, async (rawComments) => {
-      console.log('Raw comments from Firestore:', rawComments);
-      const enrichedComments = await Promise.all(
-        rawComments.map(async (comment) => {
+    console.log('Setting up comment listener for postId:', postId);
+    const unsubscribe = getComments(postId, (fetchedComments, fetchError) => {
+      if (fetchError) {
+        console.error('Comment fetch error:', fetchError);
+        setError('Failed to load comments: ' + fetchError);
+        return;
+      }
+      console.log('Fetched comments:', fetchedComments);
+      Promise.all(
+        fetchedComments.map(async (comment) => {
           try {
             const userRef = doc(db, 'users', comment.userId);
             const userDoc = await getDoc(userRef);
             const displayName = userDoc.exists() ? userDoc.data().displayName || 'Anonymous' : 'Anonymous';
             return { ...comment, displayName };
-          } catch (error) {
-            console.error(`Error fetching user ${comment.userId}:`, error);
+          } catch (err) {
+            console.error(`Error fetching user ${comment.userId}:`, err);
             return { ...comment, displayName: 'Anonymous' };
           }
         })
-      );
-      console.log('Enriched comments:', enrichedComments);
-      setComments(enrichedComments);
+      ).then((enrichedComments) => {
+        console.log('Enriched comments:', enrichedComments);
+        setComments(enrichedComments);
+        setError(null);
+      }).catch((err) => {
+        console.error('Error enriching comments:', err);
+        setError('Error processing comments.');
+      });
     });
-    return () => unsubscribe();
+
+    return () => {
+      console.log('Cleaning up comment listener for postId:', postId);
+      unsubscribe();
+    };
   }, [postId]);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -80,6 +95,7 @@ export default function CommentSection({ postId }: { postId: string }) {
       transition={{ duration: 0.5 }}
     >
       <h3 className={styles.title}>Comments</h3>
+      {error && <p className={styles.error}>{error}</p>}
       <div className={styles.commentsContainer}>
         {comments.length > 0 ? (
           comments.map((comment) => (
