@@ -2,7 +2,8 @@
 
 .messageContainer {
   display: flex;
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.5rem;
+  padding: 0.5rem;
 }
 
 .messageLeft {
@@ -14,16 +15,17 @@
 }
 
 .message {
-  max-width: 70%;
-  padding: 0.5rem 0.75rem;
+  max-width: 80%;
+  padding: 0.75rem;
   border-radius: 0.5rem;
-  box-shadow: 0 1px 2px var(--shadow);
+  border: 1px solid var(--border);
   font-family: 'Inter', sans-serif;
 }
 
 .messageCurrentUser {
   background: var(--accent);
-  color: #FFFFFF;
+  color: #ffffff;
+  border-color: var(--accent);
 }
 
 .messageOtherUser {
@@ -33,8 +35,9 @@
 
 .messageText {
   font-size: 0.875rem;
-  line-height: 1.5;
+  line-height: 1.4;
   word-break: break-word;
+  margin: 0;
 }
 
 .timestamp {
@@ -45,7 +48,7 @@
 }
 
 .timestampCurrentUser {
-  color: var(--text-secondary);
+  color: #e0f7fa;
 }
 
 .timestampOtherUser {
