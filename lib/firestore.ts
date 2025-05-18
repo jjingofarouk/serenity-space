@@ -1,6 +1,5 @@
-// lib/firestore.ts
 import { db } from './firebase';
-import { collection, addDoc, getDocs, getDoc, doc, query, orderBy } from 'firebase/firestore';
+import { collection, addDoc, getDocs, getDoc, doc, query, orderBy, onSnapshot, where } from 'firebase/firestore';
 import { Post, Message, Comment } from './types';
 
 export async function addPost(post: Omit<Post, 'id'>) {
@@ -20,6 +19,18 @@ export async function getPost(id: string): Promise<Post | null> {
 
 export async function addComment(comment: Omit<Comment, 'id'>) {
   await addDoc(collection(db, 'comments'), comment);
+}
+
+export function getComments(postId: string, callback: (comments: Comment[]) => void) {
+  const commentsQuery = query(
+    collection(db, 'comments'),
+    where('postId', '==', postId),
+    orderBy('createdAt', 'asc')
+  );
+  return onSnapshot(commentsQuery, (snapshot) => {
+    const comments = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() } as Comment));
+    callback(comments);
+  });
 }
 
 export async function addMessage(message: Omit<Message, 'id'>) {
