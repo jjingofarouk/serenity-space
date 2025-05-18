@@ -1,151 +1,74 @@
 // components/CommentSection.tsx
 'use client';
 import { useState, useEffect } from 'react';
-import { useAuth } from '@/lib/auth';
-import { addComment, getComments } from '@/lib/firestore';
-import { Button } from './ui/button';
-import { Textarea } from './ui/textarea';
-import { doc, getDoc } from 'firebase/firestore';
-import { db } from '@/lib/firebase';
-import { formatDistanceToNow } from 'date-fns';
+import { getComments } from '@/lib/firestore';
+import { Comment } from '@/lib/types';
+import { format } from 'date-fns';
 import { Timestamp } from 'firebase/firestore';
-import Link from 'next/link';
-import { motion } from 'framer-motion';
 import styles from './CommentSection.module.css';
 
-interface Comment {
-  id: string;
+interface CommentSectionProps {
   postId: string;
-  text: string;
-  userId: string;
-  createdAt: Timestamp | Date;
-  displayName?: string;
 }
 
-export default function CommentSection({ postId }: { postId: string }) {
-  const [comment, setComment] = useState('');
+export default function CommentSection({ postId }: CommentSectionProps) {
   const [comments, setComments] = useState<Comment[]>([]);
   const [error, setError] = useState<string | null>(null);
-  const { user } = useAuth();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    console.log('Setting up comment listener for postId:', postId);
-    const unsubscribe = getComments(postId, (fetchedComments, fetchError) => {
-      if (fetchError) {
-        console.error('Comment fetch error:', fetchError);
-        setError('Failed to load comments: ' + fetchError);
-        return;
-      }
-      console.log('Fetched comments:', fetchedComments);
-      Promise.all(
-        fetchedComments.map(async (comment) => {
-          try {
-            const userRef = doc(db, 'users', comment.userId);
-            const userDoc = await getDoc(userRef);
-            const displayName = userDoc.exists() ? userDoc.data().displayName || 'Anonymous' : 'Anonymous';
-            return { ...comment, displayName };
-          } catch (err) {
-            console.error(`Error fetching user ${comment.userId}:`, err);
-            return { ...comment, displayName: 'Anonymous' };
-          }
-        })
-      ).then((enrichedComments) => {
-        console.log('Enriched comments:', enrichedComments);
-        setComments(enrichedComments);
+    const unsubscribe = getComments(postId, (fetchedComments, err) => {
+      setLoading(false);
+      if (err) {
+        setError(err);
+        setComments([]);
+      } else {
         setError(null);
-      }).catch((err) => {
-        console.error('Error enriching comments:', err);
-        setError('Error processing comments.');
-      });
+        setComments(fetchedComments);
+      }
     });
-
-    return () => {
-      console.log('Cleaning up comment listener for postId:', postId);
-      unsubscribe();
-    };
+    return () => unsubscribe();
   }, [postId]);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log('Submitting comment:', { postId, text: comment, userId: user?.uid });
-    if (!user || !comment.trim()) {
-      console.log('Submit blocked: user or comment missing');
-      return;
-    }
-    try {
-      await addComment({
-        postId,
-        text: comment,
-        userId: user.uid,
-        createdAt: Timestamp.now(),
-      });
-      setComment('');
-      console.log('Comment submitted successfully');
-    } catch (error: any) {
-      console.error('Failed to add comment:', error.code, error.message);
-      alert(`Failed to add comment: ${error.message}`);
-    }
-  };
+  if (loading) {
+    return <p className={styles.loading}>Loading comments...</p>;
+  }
+
+  if (error) {
+    return (
+      <p className={styles.error}>
+        Failed to load comments: {error}.{' '}
+        <a
+          href="https://console.firebase.google.com/v1/r/project/serenity-space-52d85/firestore/indexes?create_composite=ClVwcm9qZWN0cy9zZXJlbml0eS1zcGFjZS01MmQ4NS9kYXRhYmFzZXMvKGRlZmF1bHQpL2NvbGxlY3Rpb25Hcm91cHMvY29tbWVudHMvaW5kZXhlcy9fEAEaCgoGcG9zdElkEAEaDQoJY3JlYXRlZEF0EAEaDAoIX19uYW1lX18QAQ"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Create the required index
+        </a>
+      </p>
+    );
+  }
 
   return (
-    <motion.div
-      className={styles.commentSection}
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
-    >
+    <div className={styles.container}>
       <h3 className={styles.title}>Comments</h3>
-      {error && <p className={styles.error}>{error}</p>}
-      <div className={styles.commentsContainer}>
-        {comments.length > 0 ? (
-          comments.map((comment) => (
-            <motion.div
-              key={comment.id}
-              className={styles.commentCard}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3 }}
-            >
-              <div className={styles.commentHeader}>
-                <span className={styles.displayName}>{comment.displayName || 'Anonymous'}</span>
-                <span className={styles.timestamp}>
-                  {formatDistanceToNow(
-                    comment.createdAt instanceof Timestamp ? comment.createdAt.toDate() : comment.createdAt,
-                    { addSuffix: true }
-                  )}
-                </span>
-              </div>
-              <p className={styles.commentText}>{comment.text}</p>
-            </motion.div>
-          ))
-        ) : (
-          <p className={styles.noComments}>No comments yet. Be the first to comment!</p>
-        )}
-      </div>
-      {user ? (
-        <form onSubmit={handleSubmit} className={styles.form}>
-          <Textarea
-            value={comment}
-            onChange={(e) => setComment(e.target.value)}
-            placeholder="Add a comment..."
-            className={styles.textarea}
-            rows={4}
-            aria-label="Comment input"
-          />
-          <Button
-            type="submit"
-            className={styles.submitButton}
-            disabled={!comment.trim()}
-            aria-label="Submit comment"
-          >
-            Comment
-          </Button>
-        </form>
+      {comments.length === 0 ? (
+        <p className={styles.noComments}>No comments yet.</p>
       ) : (
-        <p className={styles.signInPrompt}>
-          Please <Link href="/login" className={styles.signInLink}>sign in</Link> to comment.
-        </p>
+        <ul className={styles.commentList}>
+          {comments.map((comment) => (
+            <li key={comment.id} className={styles.comment}>
+              <p>{comment.text}</p>
+              <p className={styles.meta}>
+                Posted by {comment.userId} on{' '}
+                {comment.createdAt instanceof Timestamp
+                  ? format(comment.createdAt.toDate(), 'MMM d, yyyy')
+                  : format(new Date(comment.createdAt), 'MMM d, yyyy')}
+              </p>
+            </li>
+          ))}
+        </ul>
       )}
-    </motion.div>
+    </div>
   );
 }
