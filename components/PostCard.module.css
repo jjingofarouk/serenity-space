@@ -1,63 +1,124 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
 
+/* components/PostCard.module.css */
 .motionWrapper {
-  width: 100%;
+  margin-bottom: 16px;
 }
 
 .card {
-  background: var(--card-background);
-  border: none;
-  border-radius: 1rem;
-  box-shadow: 0 4px 12px var(--shadow);
-  transition: box-shadow 0.2s ease;
-}
-
-.card:hover {
-  box-shadow: 0 6px 16px var(--shadow-hover);
+  background: linear-gradient(145deg, #ffffff, #e6ecef);
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .cardHeader {
-  padding: 1rem 1.5rem;
-  border-bottom: 1px solid var(--border);
+  padding: 16px;
+  border-bottom: 1px solid #e5e7eb;
 }
 
 .cardTitle {
-  font-family: 'Inter', sans-serif;
-  font-size: 1.25rem;
-  font-weight: 500;
-  color: var(--text-primary);
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #1e3a8a;
   margin: 0;
 }
 
 .titleLink {
-  color: var(--text-primary);
   text-decoration: none;
-  transition: color 0.2s ease;
+  color: inherit;
+  transition: color 0.2s ease-in-out;
 }
 
 .titleLink:hover {
-  color: var(--accent);
+  color: #0d9488;
 }
 
 .cardContent {
-  padding: 1rem 1.5rem;
+  padding: 16px;
 }
 
 .content {
-  font-family: 'Inter', sans-serif;
-  font-size: 0.875rem;
-  color: var(--text-secondary);
+  color: #4b5563;
+  font-size: 1rem;
   line-height: 1.5;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  margin-bottom: 16px;
 }
 
 .meta {
-  font-family: 'Inter', sans-serif;
-  font-size: 0.75rem;
-  color: var(--text-tertiary);
-  margin-top: 0.75rem;
+  color: #6b7280;
+  font-size: 0.875rem;
+  margin-bottom: 24px;
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  position: relative;
+  margin-bottom: 24px;
+}
+
+.reactionButton {
+  background: none;
+  border: none;
+  font-size: 1.25rem;
+  cursor: pointer;
+  color: #6b7280;
+  transition: transform 0.2s ease-in-out, color 0.2s ease-in-out;
+}
+
+.reactionButton:hover {
+  transform: scale(1.2);
+  color: #0d9488;
+}
+
+.reactionButton.active {
+  color: #0d9488;
+  font-weight: 600;
+}
+
+.quickCommentButton {
+  background-color: #0d9488;
+  color: #ffffff;
+  font-weight: 500;
+  padding: 6px 16px;
+  border-radius: 8px;
+  border: none;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out, transform 0.2s ease-in-out;
+}
+
+.quickCommentButton:hover {
+  background-color: #0f766e;
+  transform: scale(1.05);
+}
+
+.quickCommentMenu {
+  position: absolute;
+  top: 40px;
+  right: 0;
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  z-index: 10;
+}
+
+.quickCommentOption {
+  background: none;
+  border: none;
+  padding: 8px 12px;
+  font-size: 0.875rem;
+  color: #1f2937;
+  text-align: left;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.quickCommentOption:hover {
+  background-color: #f3f4f6;
 }
