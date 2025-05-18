@@ -35,7 +35,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       if (user) {
         const userRef = doc(db, 'users', user.uid);
         const userDoc = await getDoc(userRef);
-        if (!userDoc.exists() && user.isAnonymous) {
+        if (!userDoc.exists()) {
           const displayName = generateRandomName();
           await setDoc(userRef, { displayName, createdAt: new Date() });
         }
@@ -51,8 +51,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       const userRef = doc(db, 'users', result.user.uid);
       const userDoc = await getDoc(userRef);
       if (!userDoc.exists()) {
+        const displayName = generateRandomName();
         await setDoc(userRef, {
-          displayName: result.user.displayName || 'Friendly Voyager',
+          displayName,
           createdAt: new Date(),
         });
       }
@@ -64,7 +65,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const signInAnonymously = async () => {
     try {
-      await signInAnonymously();
+      await signInAnonymously(auth);
     } catch (error) {
       console.error('Anonymous sign-in failed:', error);
       throw error;
@@ -77,8 +78,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       const userRef = doc(db, 'users', result.user.uid);
       const userDoc = await getDoc(userRef);
       if (!userDoc.exists()) {
+        const displayName = generateRandomName();
         await setDoc(userRef, {
-          displayName: 'Friendly Voyager',
+          displayName,
           createdAt: new Date(),
         });
       }
@@ -92,10 +94,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     try {
       const result = await createUserWithEmailAndPassword(auth, email, password);
       const userRef = doc(db, 'users', result.user.uid);
-      await setDoc(userRef, {
-        displayName: 'Friendly Voyager',
-        createdAt: new Date(),
-      });
+      const userDoc = await getDoc(userRef);
+      if (!userDoc.exists()) {
+        const displayName = generateRandomName();
+        await setDoc(userRef, {
+          displayName,
+          createdAt: new Date(),
+        });
+      }
     } catch (error) {
       console.error('Email sign-up failed:', error);
       throw error;
