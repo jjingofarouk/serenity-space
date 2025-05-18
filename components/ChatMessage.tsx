@@ -1,55 +1,56 @@
-'use client';
-import { Message } from '@/lib/types';
-import { format } from 'date-fns';
-import { motion } from 'framer-motion';
-import { Timestamp } from 'firebase/firestore';
-import { useState, useEffect } from 'react';
-import { doc, getDoc } from 'firebase/firestore';
-import { db } from '@/lib/firebase';
-import styles from './ChatMessage.module.css';
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
 
-interface ChatMessageProps {
-  message: Message;
-  currentUserId?: string;
+.messageContainer {
+  display: flex;
+  margin-bottom: 0.25rem;
+  padding: 0.25rem 0.5rem;
 }
 
-export default function ChatMessage({ message, currentUserId }: ChatMessageProps) {
-  const [displayName, setDisplayName] = useState('Unknown User');
-  const isCurrentUser = message.userId === currentUserId;
-  const timestamp = message.createdAt instanceof Timestamp
-    ? format(message.createdAt.toDate(), 'HH:mm')
-    : format(new Date(message.createdAt), 'HH:mm');
+.messageLeft {
+  justify-content: flex-start;
+}
 
-  useEffect(() => {
-    const fetchDisplayName = async () => {
-      const userRef = doc(db, 'users', message.userId);
-      const userDoc = await getDoc(userRef);
-      if (userDoc.exists()) {
-        setDisplayName(userDoc.data().displayName || 'Unknown User');
-      }
-    };
-    fetchDisplayName();
-  }, [message.userId]);
+.messageRight {
+  justify-content: flex-end;
+}
 
-  return (
-    <motion.div
-      className={`${styles.messageContainer} ${isCurrentUser ? styles.messageRight : styles.messageLeft}`}
-      initial={{ opacity: 0, y: 10 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.3 }}
-      role="listitem"
-      aria-label={`Message from ${isCurrentUser ? 'you' : displayName}`}
-    >
-      <div
-        className={`${styles.message} ${isCurrentUser ? styles.messageCurrentUser : styles.messageOtherUser}`}
-      >
-        <p className={styles.messageText}>{message.text}</p>
-        <span
-          className={`${styles.timestamp} ${isCurrentUser ? styles.timestampCurrentUser : styles.timestampOtherUser}`}
-        >
-          {displayName} • {timestamp}
-        </span>
-      </div>
-    </motion.div>
-  );
+.message {
+  max-width: 85%;
+  padding: 0.5rem 0.75rem;
+  border-radius  border-radius: 0.25rem;
+  font-family: 'Inter', sans-serif;
+}
+
+.messageCurrentUser {
+  background: var(--accent);
+  color: #ffffff;
+  border: 1px solid var(--accent);
+}
+
+.messageOtherUser {
+  background: var(--card-background);
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+}
+
+.messageHeader {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: inherit;
+  margin: 0 0 0.25rem 0;
+}
+
+.messageText {
+  font-size: 0.875rem;
+  line-height: 1.3;
+  word-break: break-word;
+  margin: 0;
+}
+
+.timestamp {
+  display: block;
+  margin-top: 0.25rem;
+  font-size: 0.75rem;
+  text-align: right;
+  color: var(--text-secondary);
 }
