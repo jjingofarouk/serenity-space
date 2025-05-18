@@ -34,19 +34,18 @@ export default function Marquee() {
 
     // Shuffle messages for random order
     const shuffledMessages = [...encouragingMessages].sort(() => Math.random() - 0.5);
-    // Create two sets of messages for seamless looping
-    marquee.innerHTML = [...shuffledMessages, ...shuffledMessages]
-      .map(msg => `<span>${msg}</span>`)
-      .join(' ');
+    // Display one message at a time with fade effect
+    let currentIndex = 0;
 
-    // CSS handles the smooth animation
-    const totalWidth = shuffledMessages.length * 200; // Adjusted width per message
-    marquee.style.setProperty('--marquee-width', `${totalWidth}px`);
-    marquee.style.setProperty('--marquee-duration', `${totalWidth / 40}s`); // Adjusted speed
-
-    return () => {
-      marquee.innerHTML = '';
+    const updateMessage = () => {
+      marquee.innerHTML = `<span>${shuffledMessages[currentIndex]}</span>`;
+      currentIndex = (currentIndex + 1) % shuffledMessages.length;
     };
+
+    updateMessage(); // Initial message
+    const interval = setInterval(updateMessage, 4000); // Change every 4 seconds
+
+    return () => clearInterval(interval);
   }, []);
 
   return (
