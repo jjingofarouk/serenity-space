@@ -1,9 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
 
 .container {
-  width: 100vw;
-  max-width: 100%;
-  margin: 0;
+  width: 100%;
+  max-width: 1200px; /* Match header's max-width */
+  margin: 0 auto; /* Center the container */
   padding: 0;
   min-height: 100vh;
   display: flex;
@@ -14,14 +14,16 @@
 
 .marquee {
   width: 100%;
+  max-width: 1200px; /* Match header's max-width */
+  margin: 0 auto; /* Center the marquee */
   background: var(--card-background);
   border-bottom: 1px solid var(--border);
-  padding: 0.25rem 0;
-  margin: 0;
+  padding: 0.25rem 1rem; /* Adjust padding for consistency */
   font-family: 'Inter', sans-serif;
   font-size: 0.8125rem;
   font-weight: 500;
   color: var(--text-primary);
+  box-sizing: border-box;
 }
 
 .marqueeItem {
@@ -90,44 +92,66 @@
 }
 
 @media (max-width: 768px) {
-  .marquee {
-    font-size: 0.75rem;
+  .container {
+    max-width: 100%; /* Allow full width on smaller screens */
+    padding: 0 0.5rem;
   }
+
+  .marquee {
+    max-width: 100%; /* Allow full width on smaller screens */
+    font-size: 0.75rem;
+    padding: 0.25rem 0.5rem;
+  }
+
   .marqueeItem {
     padding: 0 1rem;
   }
+
   .header {
     padding: 0.5rem;
   }
+
   .title {
     font-size: 1.25rem;
   }
+
   .button {
     padding: 0.4rem 0.8rem;
     font-size: 0.8125rem;
   }
+
   .posts {
     padding: 0 0.5rem;
   }
 }
 
 @media (max-width: 480px) {
+  .container {
+    padding: 0 0.25rem;
+  }
+
   .marquee {
     font-size: 0.6875rem;
+    padding: 0.25rem 0.25rem;
   }
+
   .marqueeItem {
     padding: 0 0.75rem;
   }
+
   .header {
     padding: 0.25rem;
   }
+
   .title {
     font-size: 1.125rem;
   }
+
   .button {
     padding: 0.3rem 0.6rem;
     font-size: 0.75rem;
   }
+
   .posts {
     padding: 0 0.25rem;
   }
