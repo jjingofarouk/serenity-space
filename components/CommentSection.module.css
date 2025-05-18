@@ -1,15 +1,67 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
 
 .container {
-  margin-top: 1rem;
+  margin-top: 1.5rem;
+  padding: 1rem;
+  background: var(--card-background);
+  border-radius: 0.75rem;
+  box-shadow: 0 2px 8px var(--shadow);
 }
 
 .title {
   font-family: 'Inter', sans-serif;
-  font-size: 1rem;
+  font-size: 1.25rem;
   font-weight: 500;
   color: var(--text-primary);
-  margin-bottom: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.commentsList {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.comment {
+  background: var(--background);
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  padding: 0.75rem;
+}
+
+.commentHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.displayName {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.timestamp {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.75rem;
+  color: var(--text-tertiary);
+}
+
+.commentText {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.noComments {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  text-align: center;
 }
 
 .form {
@@ -20,25 +72,45 @@
 
 .textarea {
   width: 100%;
-  resize: none;
+  min-height: 80px;
+  padding: 0.75rem;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.875rem;
+  color: var(--text-primary);
+  background: var(--card-background);
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  resize: vertical;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px rgba(44, 110, 122, 0.2);
+}
+
+.textarea::placeholder {
+  color: var(--text-secondary);
 }
 
 .button {
   background: var(--accent);
   color: #FFFFFF;
-  padding: 0.5rem 1rem;
   font-family: 'Inter', sans-serif;
   font-size: 0.875rem;
   font-weight: 500;
+  padding: 0.75rem;
   border-radius: 0.5rem;
   border: none;
   cursor: pointer;
   transition: background-color 0.2s ease, transform 0.2s ease;
+  align-self: flex-end;
 }
 
 .button:hover {
   background: var(--accent-hover);
-  transform: translateY(-1px);
+  transform: scale(1.02);
 }
 
 .button:disabled {
@@ -50,6 +122,7 @@
   font-family: 'Inter', sans-serif;
   font-size: 0.875rem;
   color: var(--text-secondary);
+  text-align: center;
 }
 
 .signInLink {
