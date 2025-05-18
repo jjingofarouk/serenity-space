@@ -9,6 +9,7 @@ import { Timestamp } from 'firebase/firestore';
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 import { formatDistanceToNow } from 'date-fns';
+import Link from 'next/link';
 import styles from './CommentSection.module.css';
 
 interface Comment {
