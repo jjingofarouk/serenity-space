@@ -38,7 +38,15 @@ export default function CommentSection({ postId }: CommentSectionProps) {
 
   useEffect(() => {
     const fetchDisplayNames = async () => {
-      const uniqueUserIds = [...new Set(comments.map((comment) => comment.userId))];
+      const uniqueUserIds: string[] = [];
+      const seenIds: { [key: string]: boolean } = {};
+      comments.forEach((comment) => {
+        if (!seenIds[comment.userId]) {
+          seenIds[comment.userId] = true;
+          uniqueUserIds.push(comment.userId);
+        }
+      });
+
       const displayNames: { [key: string]: string } = {};
       for (const userId of uniqueUserIds) {
         const userRef = doc(db, 'users', userId);
