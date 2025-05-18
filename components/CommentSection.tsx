@@ -1,3 +1,4 @@
+// components/CommentSection.tsx
 'use client';
 import { useState, useEffect } from 'react';
 import { useAuth } from '@/lib/auth';
@@ -9,6 +10,7 @@ import { db } from '@/lib/firebase';
 import { formatDistanceToNow } from 'date-fns';
 import { Timestamp } from 'firebase/firestore';
 import Link from 'next/link';
+import { motion } from 'framer-motion';
 import styles from './CommentSection.module.css';
 
 interface Comment {
@@ -29,7 +31,6 @@ export default function CommentSection({ postId }: { postId: string }) {
     console.log('Listening for comments on postId:', postId);
     const unsubscribe = getComments(postId, async (rawComments) => {
       console.log('Raw comments from Firestore:', rawComments);
-      setComments(rawComments); // Set raw comments first
       const enrichedComments = await Promise.all(
         rawComments.map(async (comment) => {
           try {
@@ -44,7 +45,7 @@ export default function CommentSection({ postId }: { postId: string }) {
         })
       );
       console.log('Enriched comments:', enrichedComments);
-      setComments([...enrichedComments]);
+      setComments(enrichedComments);
     });
     return () => unsubscribe();
   }, [postId]);
@@ -72,40 +73,52 @@ export default function CommentSection({ postId }: { postId: string }) {
   };
 
   return (
-    <div className="cardContent">
-      <h3 className="cardTitle">Comments</h3>
-      <div className="cardContent">
+    <motion.div
+      className={styles.commentSection}
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+    >
+      <h3 className={styles.title}>Comments</h3>
+      <div className={styles.commentsContainer}>
         {comments.length > 0 ? (
           comments.map((comment) => (
-            <div key={comment.id} className="card">
-              <div className="cardHeader">
-                <span>{comment.displayName || comment.userId}</span>
-                <span>
-                  {formatDistanceToNow(comment.createdAt instanceof Timestamp ? comment.createdAt.toDate() : comment.createdAt, {
-                    addSuffix: true,
-                  })}
+            <motion.div
+              key={comment.id}
+              className={styles.commentCard}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3 }}
+            >
+              <div className={styles.commentHeader}>
+                <span className={styles.displayName}>{comment.displayName || 'Anonymous'}</span>
+                <span className={styles.timestamp}>
+                  {formatDistanceToNow(
+                    comment.createdAt instanceof Timestamp ? comment.createdAt.toDate() : comment.createdAt,
+                    { addSuffix: true }
+                  )}
                 </span>
               </div>
-              <p>{comment.text}</p>
-            </div>
+              <p className={styles.commentText}>{comment.text}</p>
+            </motion.div>
           ))
         ) : (
-          <p>No comments yet. Be the first to comment!</p>
+          <p className={styles.noComments}>No comments yet. Be the first to comment!</p>
         )}
       </div>
       {user ? (
-        <form onSubmit={handleSubmit} className="form">
+        <form onSubmit={handleSubmit} className={styles.form}>
           <Textarea
             value={comment}
             onChange={(e) => setComment(e.target.value)}
             placeholder="Add a comment..."
-            className="textarea"
+            className={styles.textarea}
             rows={4}
             aria-label="Comment input"
           />
           <Button
             type="submit"
-            className="button"
+            className={styles.submitButton}
             disabled={!comment.trim()}
             aria-label="Submit comment"
           >
@@ -113,11 +126,10 @@ export default function CommentSection({ postId }: { postId: string }) {
           </Button>
         </form>
       ) : (
-        <p>
-          Please <Link href="/login">sign in</Link> to comment.
+        <p className={styles.signInPrompt}>
+          Please <Link href="/login" className={styles.signInLink}>sign in</Link> to comment.
         </p>
       )}
-    </div>
+    </motion.div>
   );
 }
-            
