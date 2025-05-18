@@ -1,10 +1,13 @@
 // components/CommentSection.tsx
 'use client';
 import { useState, useEffect } from 'react';
-import { getComments } from '@/lib/firestore';
+import { getComments, addComment } from '@/lib/firestore';
 import { Comment } from '@/lib/types';
 import { format } from 'date-fns';
 import { Timestamp } from 'firebase/firestore';
+import { useAuth } from '@/lib/auth';
+import { doc, getDoc } from 'firebase/firestore';
+import { db } from '@/lib/firebase';
 import styles from './CommentSection.module.css';
 
 interface CommentSectionProps {
@@ -15,6 +18,9 @@ export default function CommentSection({ postId }: CommentSectionProps) {
   const [comments, setComments] = useState<Comment[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
+  const [newComment, setNewComment] = useState('');
+  const { user } = useAuth();
+  const [userDisplayNames, setUserDisplayNames] = useState<{ [key: string]: string }>({});
 
   useEffect(() => {
     const unsubscribe = getComments(postId, (fetchedComments, err) => {
@@ -29,6 +35,45 @@ export default function CommentSection({ postId }: CommentSectionProps) {
     });
     return () => unsubscribe();
   }, [postId]);
+
+  useEffect(() => {
+    const fetchDisplayNames = async () => {
+      const uniqueUserIds = [...new Set(comments.map((comment) => comment.userId))];
+      const displayNames: { [key: string]: string } = {};
+      for (const userId of uniqueUserIds) {
+        const userRef = doc(db, 'users', userId);
+        const userDoc = await getDoc(userRef);
+        displayNames[userId] = userDoc.exists() ? userDoc.data().displayName || 'Unknown User' : 'Unknown User';
+      }
+      setUserDisplayNames(displayNames);
+    };
+    if (comments.length > 0) {
+      fetchDisplayNames();
+    }
+  }, [comments]);
+
+  const handleAddComment = async () => {
+    if (!user) {
+      alert('Please sign in to comment.');
+      return;
+    }
+    if (!newComment.trim()) {
+      alert('Comment cannot be empty.');
+      return;
+    }
+    try {
+      await addComment({
+        postId,
+        text: newComment,
+        userId: user.uid,
+        createdAt: Timestamp.now(),
+      });
+      setNewComment('');
+    } catch (error: any) {
+      console.error('Failed to add comment:', error);
+      alert('Failed to add comment.');
+    }
+  };
 
   if (loading) {
     return <p className={styles.loading}>Loading comments...</p>;
@@ -52,6 +97,24 @@ export default function CommentSection({ postId }: CommentSectionProps) {
   return (
     <div className={styles.container}>
       <h3 className={styles.title}>Comments</h3>
+      {user && (
+        <div className={styles.commentForm}>
+          <textarea
+            className={styles.commentInput}
+            value={newComment}
+            onChange={(e) => setNewComment(e.target.value)}
+            placeholder="Write your comment..."
+            rows={3}
+          />
+          <button
+            className={styles.submitButton}
+            onClick={handleAddComment}
+            disabled={!newComment.trim()}
+          >
+            Post Comment
+          </button>
+        </div>
+      )}
       {comments.length === 0 ? (
         <p className={styles.noComments}>No comments yet.</p>
       ) : (
@@ -60,7 +123,7 @@ export default function CommentSection({ postId }: CommentSectionProps) {
             <li key={comment.id} className={styles.comment}>
               <p>{comment.text}</p>
               <p className={styles.meta}>
-                Posted by {comment.userId} on{' '}
+                Posted by {userDisplayNames[comment.userId] || 'Unknown User'} on{' '}
                 {comment.createdAt instanceof Timestamp
                   ? format(comment.createdAt.toDate(), 'MMM d, yyyy')
                   : format(new Date(comment.createdAt), 'MMM d, yyyy')}
