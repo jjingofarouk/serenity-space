@@ -40,9 +40,9 @@ export default function Marquee() {
       .join(' ');
 
     // CSS handles the smooth animation
-    const totalWidth = shuffledMessages.length * 300; // Approximate width per message
+    const totalWidth = shuffledMessages.length * 200; // Adjusted width per message
     marquee.style.setProperty('--marquee-width', `${totalWidth}px`);
-    marquee.style.setProperty('--marquee-duration', `${totalWidth / 50}s`); // Adjust speed
+    marquee.style.setProperty('--marquee-duration', `${totalWidth / 40}s`); // Adjusted speed
 
     return () => {
       marquee.innerHTML = '';
