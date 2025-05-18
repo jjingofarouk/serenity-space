@@ -47,11 +47,11 @@ export default function PostCard({ post }: { post: Post }) {
     fetchDisplayName();
 
     const fetchReactions = async () => {
-      const reactionData = await getReactions(post.id);
+      const reactionData = await getReactions(post.id, user?.uid);
       setReactions(reactionData);
     };
     fetchReactions();
-  }, [post.id, post.userId]);
+  }, [post.id, post.userId, user]);
 
   const handleReaction = async (reactionType: 'love' | 'like' | 'support') => {
     if (!user) {
@@ -113,7 +113,6 @@ export default function PostCard({ post }: { post: Post }) {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
-      whileHover={{ scale: 1.02 }}
     >
       <Card className={styles.card}>
         <CardHeader className={styles.cardHeader}>
