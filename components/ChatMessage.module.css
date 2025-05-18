@@ -1,9 +1,9 @@
-
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
 
 .messageContainer {
   display: flex;
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.25rem;
+  padding: 0.25rem 0.5rem;
 }
 
 .messageLeft {
@@ -15,27 +15,36 @@
 }
 
 .message {
-  max-width: 70%;
+  max-width: 85%;
   padding: 0.5rem 0.75rem;
-  border-radius: 0.5rem;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  border-radius: 0.25rem;
   font-family: 'Inter', sans-serif;
 }
 
 .messageCurrentUser {
-  background: #2C6E7A;
-  color: #D7DADC;
+  background: var(--accent);
+  color: #ffffff;
+  border: 1px solid var(--accent);
 }
 
 .messageOtherUser {
-  background: #2F2F30;
-  color: #B0B3B8;
+  background: var(--card-background);
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+}
+
+.messageHeader {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: inherit;
+  margin: 0 0 0.25rem 0;
 }
 
 .messageText {
   font-size: 0.875rem;
-  line-height: 1.5;
+  line-height: 1.3;
   word-break: break-word;
+  margin: 0;
 }
 
 .timestamp {
@@ -43,12 +52,5 @@
   margin-top: 0.25rem;
   font-size: 0.75rem;
   text-align: right;
-}
-
-.timestampCurrentUser {
-  color: #B0B3B8;
-}
-
-.timestampOtherUser {
-  color: #6B7280;
+  color: var(--text-secondary);
 }

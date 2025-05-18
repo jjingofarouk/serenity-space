@@ -1,19 +1,41 @@
 // components/PostCard.tsx
-import Link from 'next/link';
-import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
-import { Post } from '@/lib/types';
-import { motion } from 'framer-motion';
-import { format } from 'date-fns';
-import { Timestamp } from 'firebase/firestore';
+'use client';
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
+import { useAuth } from '@/lib/auth';
+import { addComment, addReaction, removeReaction, getReactions } from '@/lib/firestore';
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
+import { format } from 'date-fns';
+import { Timestamp } from 'firebase/firestore';
+import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
+import { motion } from 'framer-motion';
+import { Heart, ThumbsUp, Users } from 'lucide-react';
+import styles from './PostCard.module.css';
+
+interface Post {
+  id: string;
+  title: string;
+  content: string;
+  userId: string;
+  createdAt: Timestamp | Date;
+}
 
 export default function PostCard({ post }: { post: Post }) {
   const [displayName, setDisplayName] = useState('Unknown User');
-  const createdAt = post.createdAt instanceof Timestamp
-    ? format(post.createdAt.toDate(), 'MMM d, yyyy')
-    : format(post.createdAt, 'MMM d, yyyy');
+  const { user } = useAuth();
+  const [reactions, setReactions] = useState<{
+    love: number;
+    like: number;
+    support: number;
+    userReaction?: 'love' | 'like' | 'support';
+  }>({
+    love: 0,
+    like: 0,
+    support: 0,
+  });
+  const [showQuickComments, setShowQuickComments] = useState(false);
+  const quickCommentOptions = ['I love this!', 'This is inspiring!', 'You’re not alone!', 'Thanks for sharing!'];
 
   useEffect(() => {
     const fetchDisplayName = async () => {
@@ -24,33 +46,135 @@ export default function PostCard({ post }: { post: Post }) {
       }
     };
     fetchDisplayName();
-  }, [post.userId]);
+
+    const fetchReactions = async () => {
+      const reactionData = await getReactions(post.id, user?.uid);
+      setReactions(reactionData);
+    };
+    fetchReactions();
+  }, [post.id, post.userId, user]);
+
+  const handleReaction = async (reactionType: 'love' | 'like' | 'support') => {
+    if (!user) {
+      alert('Please sign in to react.');
+      return;
+    }
+    try {
+      if (reactions.userReaction === reactionType) {
+        await removeReaction(post.id, user.uid);
+        setReactions((prev) => ({
+          ...prev,
+          [reactionType]: prev[reactionType] - 1,
+          userReaction: undefined,
+        }));
+      } else {
+        await addReaction(post.id, user.uid, reactionType);
+        setReactions((prev) => {
+          const newReactions = { ...prev };
+          if (prev.userReaction) {
+            newReactions[prev.userReaction] = prev[prev.userReaction] - 1;
+          }
+          newReactions[reactionType] = prev[reactionType] + 1;
+          newReactions.userReaction = reactionType;
+          return newReactions;
+        });
+      }
+    } catch (error: any) {
+      console.error('Failed to update reaction:', error);
+      alert('Failed to update reaction.');
+    }
+  };
+
+  const handleQuickComment = async (text: string) => {
+    if (!user) {
+      alert('Please sign in to comment.');
+      return;
+    }
+    try {
+      await addComment({
+        postId: post.id,
+        text,
+        userId: user.uid,
+        createdAt: Timestamp.now(),
+      });
+      setShowQuickComments(false);
+    } catch (error: any) {
+      console.error('Failed to add quick comment:', error);
+      alert('Failed to add comment.');
+    }
+  };
+
+  const createdAt = post.createdAt instanceof Timestamp
+    ? format(post.createdAt.toDate(), 'MMM d, yyyy')
+    : format(post.createdAt, 'MMM d, yyyy');
 
   return (
     <motion.div
+      className={styles.motionWrapper}
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
-      whileHover={{ scale: 1.02 }}
     >
-      <Card className="bg-gradient-to-br from-blue-50 to-teal-50 border-none shadow-md rounded-2xl transition-all duration-200 hover:shadow-lg">
-        <CardHeader className="pb-4">
-          <CardTitle className="text-xl font-semibold text-blue-800 tracking-tight">
-            <Link
-              href={`/forum/${post.id}`}
-              className="hover:text-teal-600 transition-colors duration-200"
-            >
+      <Card className={styles.card}>
+        <CardHeader className={styles.cardHeader}>
+          <CardTitle className={styles.cardTitle}>
+            <Link href={`/forum/${post.id}`} className={styles.titleLink}>
               {post.title}
             </Link>
           </CardTitle>
         </CardHeader>
-        <CardContent>
-          <p className="text-gray-700 text-base line-clamp-2 leading-relaxed">
-            {post.content}
+        <CardContent className={styles.cardContent}>
+          <p className={styles.content}>{post.content}</p>
+          <p className={styles.meta}>
+             {displayName} • {createdAt}
           </p>
-          <p className="text-sm text-gray-500 mt-3">
-            Posted by {displayName} on {createdAt}
-          </p>
+          <div className={styles.actions}>
+            <button
+              className={`${styles.reactionButton} ${reactions.userReaction === 'love' ? styles.active : ''}`}
+              onClick={() => handleReaction('love')}
+              aria-label="Love reaction"
+            >
+              <Heart className="w-5 h-5" fill={reactions.userReaction === 'love' ? '#DC2626' : 'none'} stroke={reactions.userReaction === 'love' ? '#DC2626' : 'currentColor'} />
+              {reactions.love > 0 ? reactions.love : ''}
+            </button>
+            <button
+              className={`${styles.reactionButton} ${reactions.userReaction === 'like' ? styles.active : ''}`}
+              onClick={() => handleReaction('like')}
+              aria-label="Like reaction"
+            >
+              <ThumbsUp className="w-5 h-5" />
+              {reactions.like > 0 ? reactions.like : ''}
+            </button>
+            <button
+              className={`${styles.reactionButton} ${reactions.userReaction === 'support' ? styles.active : ''}`}
+              onClick={() => handleReaction('support')}
+              aria-label="Support reaction"
+            >
+              <Users className="w-5 h-5" />
+              {reactions.support > 0 ? reactions.support : ''}
+            </button>
+            <button
+              className={styles.quickCommentButton}
+              onClick={() => setShowQuickComments(!showQuickComments)}
+              aria-label="Toggle quick comments"
+            >
+              Quick Comment
+            </button>
+            {showQuickComments && (
+              <div className={styles.quickCommentMenu}>
+                {quickCommentOptions.map((option) => (
+                  <button
+                    key={option}
+                    className={styles.quickCommentOption}
+                    onClick={() => handleQuickComment(option)}
+                    aria-label={`Post quick comment: ${option}`}
+                  >
+                    {option}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
         </CardContent>
       </Card>
     </motion.div>

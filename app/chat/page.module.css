@@ -1,88 +1,141 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
 
-@import url('https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600&family=Open+Sans:wght@400;500;600&display=swap');
+.container {
+  width: 100vw;
+  margin: 0;
+  padding: 0.5rem;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: var(--card-background);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.header h1 {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0;
+}
 
 .card {
-  background: linear-gradient(to bottom right, #E6F5F7, #F0F9F5);
-  border: none;
-  border-radius: 1.5rem;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-  max-width: 64rem;
-  margin: 0 auto;
-}
-
-.cardHeader {
-  border-bottom: 1px solid #D1D5DB;
-}
-
-.cardTitle {
-  font-family: 'Lora', serif;
-  font-size: 1.5rem;
-  font-weight: 500;
-  color: #2C6E7A;
+  background: var(--card-background);
+  border-radius: 0.25rem;
+  border: 1px solid var(--border);
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  margin: 0.25rem 0;
 }
 
 .cardContent {
-  padding: 1.5rem;
+  padding: 0.75rem;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 .chatContainer {
-  height: 60vh;
-  max-height: 600px;
+  flex-grow: 1;
   overflow-y: auto;
-  margin-bottom: 1.5rem;
-  padding: 1rem;
-  background: #FFFFFF;
-  border-radius: 0.75rem;
-  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.05);
+  padding: 0.25rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
 }
 
 .form {
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--border);
+}
+
+.inputWrapper {
+  position: relative;
   display: flex;
-  gap: 0.75rem;
+  align-items: center;
 }
 
 .textarea {
-  flex-grow: 1;
+  width: 100%;
+  min-height: 36px;
+  max-height: 80px;
+  padding: 0.5rem 2.5rem 0.5rem 0.75rem;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.8125rem;
+  color: var(--text-primary);
+  background: var(--card-background);
+  border: 1px solid var(--border);
+  border-radius: 0.25rem;
   resize: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-.button {
-  background: #2C6E7A;
-  color: #FFFFFF;
-  padding: 0.75rem 1.5rem;
-  font-family: 'Open Sans', sans-serif;
-  font-size: 1rem;
-  font-weight: 500;
-  border-radius: 2rem;
+.textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 1px var(--accent);
+}
+
+.textarea::placeholder {
+  color: var(--text-secondary);
+}
+
+.sendButton {
+  position: absolute;
+  right: 0.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: var(--accent);
+  color: #ffffff;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
   border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  transition: background-color 0.2s ease, transform 0.2s ease;
 }
 
-.button:hover {
-  background: #5BA199;
-  transform: scale(1.05);
+.sendButton:hover {
+  background: var(--accent-hover);
+  transform: translateY(-50%) scale(1.05);
 }
 
-.button:disabled {
+.sendButton:disabled {
   opacity: 0.5;
   pointer-events: none;
 }
 
 .signInPrompt {
-  font-family: 'Open Sans', sans-serif;
-  font-size: 1rem;
-  color: #1C2526;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
   text-align: center;
+  margin-top: 0.75rem;
 }
 
 .signInLink {
-  color: #2C6E7A;
+  color: var(--accent);
   font-weight: 500;
   text-decoration: none;
   transition: color 0.2s ease;
 }
 
 .signInLink:hover {
-  color: #5BA199;
+  color: var(--accent-hover);
 }

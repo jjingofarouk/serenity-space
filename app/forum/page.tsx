@@ -1,4 +1,4 @@
-// app/forum/page.tsx
+// pages/forum/page.tsx
 'use client';
 import { useQuery } from '@tanstack/react-query';
 import { getPosts } from '@/lib/firestore';

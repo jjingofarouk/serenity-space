@@ -1,0 +1,78 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+
+.marqueeContainer {
+  width: 100%;
+  overflow: hidden;
+  background: linear-gradient(90deg, var(--card-background), var(--background));
+  border-bottom: 1px solid var(--border);
+  padding: 0.5rem 0;
+  margin: 0;
+  position: relative;
+  z-index: 10;
+  box-shadow: 0 2px 4px var(--shadow);
+}
+
+.marquee {
+  display: flex;
+  white-space: nowrap;
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(0.875rem, 2vw, 1rem);
+  font-weight: 600;
+  color: var(--text-primary);
+  animation: marquee var(--marquee-duration) linear infinite;
+  will-change: transform;
+}
+
+.marquee span {
+  display: inline-flex;
+  align-items: center;
+  padding: 0 2rem;
+  color: var(--accent);
+  transition: color 0.3s ease;
+}
+
+.marquee span:hover {
+  color: var(--text-primary);
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(calc(-1 * var(--marquee-width)));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee {
+    animation: none;
+    display: flex;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+  }
+}
+
+@media (max-width: 768px) {
+  .marqueeContainer {
+    padding: 0.25rem 0;
+  }
+
+  .marquee {
+    font-size: clamp(0.75rem, 2.5vw, 0.875rem);
+  }
+
+  .marquee span {
+    padding: 0 1.25rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .marquee {
+    font-size: clamp(0.6875rem, 3vw, 0.8125rem);
+  }
+
+  .marquee span {
+    padding: 0 1rem;
+  }
+}

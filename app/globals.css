@@ -1,5 +1,36 @@
+:root {
+  --background: #FDFAF5;
+  --card-background: #FFFFFF;
+  --text-primary: #2D2320;
+  --text-secondary: #6D6A75;
+  --accent: #FF5E5B;
+  --accent-hover: #FF8C89;
+  --secondary-accent: #4DB6AC;
+  --border: #E0D9D5;
+  --error: #D32F2F;
+  --shadow: rgba(0, 0, 0, 0.12);
+}
 
-@import url('https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600&family=Open+Sans:wght@400;500;600&display=swap');
-@import './styles/base.css';
-@import './styles/components.css';
-@import './styles/utils.css';
+[data-theme='dark'], .dark {
+  --background: #1A1C22;
+  --card-background: #2A2E38;
+  --text-primary: #F7ECEB;
+  --text-secondary: #A8A5B0;
+  --accent: #FF8C89;
+  --accent-hover: #FF5E5B;
+  --secondary-accent: #66C4BB;
+  --border: #545863;
+  --error: #EF5350;
+  --shadow: rgba(0, 0, 0, 0.35);
+}
+
+body {
+  margin: 0;
+  background: var(--background);
+  color: var(--text-primary);
+  font-family: 'Inter', sans-serif;
+}
+
+html, body {
+  transition: none;
+}

@@ -3,14 +3,14 @@
 
 .content {
   font-family: 'Open Sans', sans-serif;
-  color: #1C2526;
+  color: var(--text-primary);
 }
 
 .sectionTitle {
   font-family: 'Lora', serif;
   font-size: 1.25rem;
   font-weight: 500;
-  color: #1C2526;
+  color: var(--text-primary);
   margin: 1.5rem 0 0.75rem;
 }
 
@@ -18,7 +18,7 @@
   font-size: 0.875rem;
   line-height: 1.75;
   margin-bottom: 1rem;
-  color: #1C2526;
+  color: var(--text-primary);
 }
 
 .list {
@@ -30,5 +30,5 @@
 .list li {
   font-size: 0.875rem;
   line-height: 1.75;
-  color: #1C2526;
+  color: var(--text-primary);
 }

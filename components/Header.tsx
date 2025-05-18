@@ -1,17 +1,46 @@
-// components/Header.tsx
 'use client';
 import Link from 'next/link';
 import Image from 'next/image';
-import AuthButton from './AuthButton';
 import { motion } from 'framer-motion';
-import { Menu, X } from 'lucide-react';
-import { useState } from 'react';
+import { Menu, X, Home, Clipboard, MessageSquare, Folder, HelpCircle, FileText, Lock, Handshake, Sun, Moon, LogIn, LogOut, User } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { useTheme } from '@/lib/ThemeContext';
+import { useAuth } from '@/lib/auth';
+import { doc, getDoc } from 'firebase/firestore';
+import { db } from '@/lib/firebase';
 import styles from './Header.module.css';
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
+  const [displayName, setDisplayName] = useState('Guest');
+  const { theme, toggleTheme } = useTheme();
+  const { user, signOutUser } = useAuth();
 
   const toggleMenu = () => setIsOpen(!isOpen);
+
+  useEffect(() => {
+    const fetchDisplayName = async () => {
+      if (user) {
+        const userRef = doc(db, 'users', user.uid);
+        const userDoc = await getDoc(userRef);
+        if (userDoc.exists()) {
+          setDisplayName(userDoc.data().displayName || 'Guest');
+        }
+      } else {
+        setDisplayName('Guest');
+      }
+    };
+    fetchDisplayName();
+  }, [user]);
+
+  const handleLogout = async () => {
+    try {
+      await signOutUser();
+      toggleMenu();
+    } catch (error) {
+      console.error('Logout failed:', error);
+    }
+  };
 
   return (
     <motion.header
@@ -33,46 +62,101 @@ export default function Header() {
             SerenitySpace
           </Link>
         </div>
-        <button className={styles.hamburger} onClick={toggleMenu} aria-label="Toggle menu">
-          {isOpen ? <X className={styles.icon} /> : <Menu className={styles.icon} />}
-        </button>
+        <div className={styles.userContainer}>
+          <User size={20} className={styles.userIcon} />
+          <span className={styles.userName}>{displayName}</span>
+        </div>
+        <div className={styles.controls}>
+          <div className={styles.desktopNav}>
+            <Link href="/" className={styles.navLink}>
+              Home
+            </Link>
+            <Link href="/forum" className={styles.navLink}>
+              Forum
+            </Link>
+            <Link href="/chat" className={styles.navLink}>
+              Chat
+            </Link>
+            <Link href="/topics" className={styles.navLink}>
+              Topics
+            </Link>
+            <Link href="/help" className={styles.navLink}>
+              Help
+            </Link>
+            {user ? (
+              <button onClick={signOutUser} className={styles.navLink} aria-label="Log out">
+                Logout
+              </button>
+            ) : (
+              <Link href="/login" className={styles.navLink}>
+                Login
+              </Link>
+            )}
+          </div>
+          <button
+            onClick={toggleTheme}
+            className={styles.themeToggle}
+            aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
+          >
+            {theme === 'light' ? <Moon size={20} /> : <Sun size={20} />}
+          </button>
+          <button className={styles.hamburger} onClick={toggleMenu} aria-label="Toggle menu">
+            {isOpen ? <X className={styles.icon} /> : <Menu className={styles.icon} />}
+          </button>
+        </div>
         <div className={`${styles.sidebar} ${isOpen ? styles.sidebarOpen : ''}`}>
           <div className={styles.sidebarHeader}>
-            <Link href="/" className={styles.logo}>
-              SerenitySpace
-            </Link>
+            <div className={styles.sidebarUser}>
+              <Link href="/" className={styles.logo}>
+                SerenitySpace
+              </Link>
+              <div className={styles.sidebarUserName}>
+                <User size={16} className={styles.userIcon} />
+                <span>{displayName}</span>
+              </div>
+            </div>
             <button className={styles.closeButton} onClick={toggleMenu} aria-label="Close menu">
               <X className={styles.icon} />
             </button>
           </div>
           <div className={styles.navLinks}>
-            <Link href="/" className={styles.navLink} onClick={toggleMenu}>
-              🏠 Home
+            <Link href="/" className={styles.sidebarLink} onClick={toggleMenu}>
+              <Home className={styles.icon} size={16} /> Home
             </Link>
-            <Link href="/forum" className={styles.navLink} onClick={toggleMenu}>
-              📋 Forum
+            <Link href="/forum" className={styles.sidebarLink} onClick={toggleMenu}>
+              <Clipboard className={styles.icon} size={16} /> Forum
             </Link>
-            <Link href="/chat" className={styles.navLink} onClick={toggleMenu}>
-              💬 Chat
+            <Link href="/chat" className={styles.sidebarLink} onClick={toggleMenu}>
+              <MessageSquare className={styles.icon} size={16} /> Chat
             </Link>
-            <Link href="/topics" className={styles.navLink} onClick={toggleMenu}>
-              🗂️ Topics
+            <Link href="/topics" className={styles.sidebarLink} onClick={toggleMenu}>
+              <Folder className={styles.icon} size={16} /> Topics
             </Link>
-            <Link href="/help" className={styles.navLink} onClick={toggleMenu}>
-              ❓ Help
+            <Link href="/help" className={styles.sidebarLink} onClick={toggleMenu}>
+              <HelpCircle className={styles.icon} size={16} /> Help
             </Link>
-            <Link href="/rules" className={styles.navLink} onClick={toggleMenu}>
-              📜 Rules
+            <Link href="/rules" className={styles.sidebarLink} onClick={toggleMenu}>
+              <FileText className={styles.icon} size={16} /> Rules
             </Link>
-            <Link href="/privacy" className={styles.navLink} onClick={toggleMenu}>
-              🔒 Privacy Policy
+            <Link href="/privacy" className={styles.sidebarLink} onClick={toggleMenu}>
+              <Lock className={styles.icon} size={16} /> Privacy Policy
             </Link>
-            <Link href="/user-agreement" className={styles.navLink} onClick={toggleMenu}>
-              🤝 User Agreement
+            <Link href="/user-agreement" className={styles.sidebarLink} onClick={toggleMenu}>
+              <Handshake className={styles.icon} size={16} /> User Agreement
             </Link>
-          </div>
-          <div className={styles.authContainer}>
-            <AuthButton />
+            {user ? (
+              <button
+                onClick={handleLogout}
+                className={styles.sidebarLink}
+                aria-label="Log out"
+              >
+                <LogOut className={styles.icon} size={16} /> Logout
+              </button>
+            ) : (
+              <Link href="/login" className={styles.sidebarLink} onClick={toggleMenu}>
+                <LogIn className={styles.icon} size={16} /> Login
+              </Link>
+            )}
           </div>
         </div>
         {isOpen && <div className={styles.overlay} onClick={toggleMenu}></div>}

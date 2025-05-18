@@ -1,4 +1,3 @@
-
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
 
 .button {
@@ -9,8 +8,8 @@
   font-family: 'Inter', sans-serif;
   font-size: 0.875rem;
   font-weight: 500;
-  background: #2C6E7A;
-  color: #D7DADC;
+  background: var(--accent);
+  color: #FFFFFF;
   border-radius: 0.5rem;
   border: none;
   cursor: pointer;
@@ -18,7 +17,7 @@
 }
 
 .button:hover {
-  background: #5BA199;
+  background: var(--accent-hover);
   transform: translateY(-1px);
 }
 

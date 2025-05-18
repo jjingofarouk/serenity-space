@@ -1,54 +1,130 @@
-
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+/* components/Header.module.css */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
 .header {
   position: sticky;
   top: 0;
-  background: #F0F9F5;
-  border-bottom: 1px solid #D1D5DB;
+  background: var(--background);
+  border-bottom: 1px solid var(--border);
   z-index: 100;
+  box-shadow: 0 2px 4px var(--shadow);
+  width: 100%;
+  padding: 0;
 }
 
 .nav {
-  max-width: 80rem;
+  width: 100%;
+  max-width: 1440px;
   margin: 0 auto;
   padding: 0.75rem 1rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  box-sizing: border-box;
 }
 
 .logoContainer {
   display: flex;
   align-items: center;
+  gap: 0.75rem;
 }
 
 .logo {
   font-family: 'Inter', sans-serif;
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: #1C2526;
+  font-size: clamp(1.5rem, 2.5vw, 1.75rem);
+  font-weight: 700;
+  color: var(--text-primary);
   text-decoration: none;
-  margin-left: 0.5rem;
 }
 
 .logoIcon {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 8px;
+  object-fit: cover;
+  transition: transform 0.2s ease;
+}
+
+.logoIcon:hover {
+  transform: scale(1.1);
+}
+
+.userContainer {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.userIcon {
+  color: var(--text-primary);
   width: 1.5rem;
   height: 1.5rem;
 }
 
-.hamburger {
-  display: none;
+.userName {
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(0.875rem, 2vw, 1rem);
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.themeToggle {
   background: none;
   border: none;
   cursor: pointer;
   padding: 0.5rem;
+  color: var(--text-primary);
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.themeToggle:hover {
+  color: var(--accent);
+  transform: scale(1.15);
+}
+
+.hamburger {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  display: none;
 }
 
 .icon {
   width: 1.5rem;
   height: 1.5rem;
-  color: #1C2526;
+  color: var(--text-primary);
+}
+
+.desktopNav {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.navLink {
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(0.875rem, 2vw, 1rem);
+  font-weight: 600;
+  color: var(--text-primary);
+  text-decoration: none;
+  padding: 0.5rem 0.75rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: color 0.2s ease, background-color 0.2s ease;
+}
+
+.navLink:hover {
+  color: var(--accent);
+  background: var(--card-background);
+  border-radius: 0.375rem;
 }
 
 .sidebar {
@@ -57,13 +133,15 @@
   right: 0;
   width: 280px;
   height: 100%;
-  background: #F0F9F5;
-  border-left: 1px solid #D1D5DB;
+  background: var(--background);
+  border-left: 1px solid var(--border);
   display: flex;
   flex-direction: column;
   transform: translateX(100%);
   transition: transform 0.3s ease;
   z-index: 200;
+  box-shadow: -2px 0 8px var(--shadow);
+  box-sizing: border-box;
 }
 
 .sidebarOpen {
@@ -75,7 +153,23 @@
   justify-content: space-between;
   align-items: center;
   padding: 1rem;
-  border-bottom: 1px solid #D1D5DB;
+  border-bottom: 1px solid var(--border);
+}
+
+.sidebarUser {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.sidebarUserName {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(0.875rem, 2vw, 1rem);
+  font-weight: 600;
+  color: var(--text-primary);
 }
 
 .closeButton {
@@ -94,28 +188,23 @@
   overflow-y: auto;
 }
 
-.navLink {
+.sidebarLink {
   font-family: 'Inter', sans-serif;
-  font-size: 1rem;
-  font-weight: 500;
-  color: #1C2526;
+  font-size: clamp(0.875rem, 2vw, 1rem);
+  font-weight: 600;
+  color: var(--text-primary);
   text-decoration: none;
   padding: 0.75rem 1rem;
-  border-radius: 0.5rem;
+  border-radius: 0.375rem;
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.75rem;
   transition: color 0.2s ease, background-color 0.2s ease;
 }
 
-.navLink:hover {
-  color: #2C6E7A;
-  background: #E6F5F7;
-}
-
-.authContainer {
-  padding: 1rem;
-  border-top: 1px solid #D1D5DB;
+.sidebarLink:hover {
+  color: var(--accent);
+  background: var(--card-background);
 }
 
 .overlay {
@@ -124,8 +213,18 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.6);
   z-index: 150;
+}
+
+@media (max-width: 1024px) {
+  .nav {
+    padding: 0.5rem 0.75rem;
+  }
+
+  .desktopNav {
+    gap: 1rem;
+  }
 }
 
 @media (max-width: 768px) {
@@ -133,7 +232,49 @@
     display: block;
   }
 
+  .desktopNav {
+    display: none;
+  }
+
   .sidebar {
     display: flex;
+    width: 260px;
+  }
+
+  .userContainer {
+    display: none;
+  }
+
+  .nav {
+    padding: 0.5rem 0.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .nav {
+    padding: 0.25rem 0.25rem;
+  }
+
+  .logo {
+    font-size: clamp(1.25rem, 4vw, 1.5rem);
+  }
+
+  .logoIcon {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+
+  .sidebar {
+    width: 220px;
+  }
+
+  .sidebarUserName {
+    font-size: clamp(0.75rem, 3vw, 0.875rem);
+  }
+}
+
+@media (min-width: 769px) {
+  .themeToggle {
+    display: block;
   }
 }

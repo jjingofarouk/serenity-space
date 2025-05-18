@@ -3,8 +3,9 @@
 import { ReactNode } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { AuthProvider } from '@/lib/auth';
-import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import Header from '@/components/Header';
+import Marquee from '@/components/Marquee';
 import styles from './ClientLayout.module.css';
 
 const queryClient = new QueryClient();
@@ -15,6 +16,7 @@ export default function ClientLayout({ children }: { children: ReactNode }) {
       <AuthProvider>
         <div className={styles.container}>
           <Header />
+          <Marquee />
           <main className={styles.main}>{children}</main>
           <Footer />
         </div>
