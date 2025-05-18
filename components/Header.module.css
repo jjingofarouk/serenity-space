@@ -92,6 +92,9 @@
   color: var(--text-primary);
   text-decoration: none;
   padding: 0.5rem 0;
+  background: none;
+  border: none;
+  cursor: pointer;
   transition: color 0.2s ease;
 }
 
