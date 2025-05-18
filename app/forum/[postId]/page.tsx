@@ -43,12 +43,12 @@ export default function PostPage({ params }: { params: { postId: string } }) {
       fetchDisplayName();
 
       const fetchReactions = async () => {
-        const reactionData = await getReactions(params.postId);
+        const reactionData = await getReactions(params.postId, user?.uid);
         setReactions(reactionData);
       };
       fetchReactions();
     }
-  }, [post, params.postId]);
+  }, [post, params.postId, user]);
 
   const handleReaction = async (reactionType: 'love' | 'like' | 'support') => {
     if (!user) {
