@@ -1,4 +1,3 @@
-// components/PostCard.tsx
 import Link from 'next/link';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Post } from '@/lib/types';
@@ -8,6 +7,7 @@ import { Timestamp } from 'firebase/firestore';
 import { useState, useEffect } from 'react';
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
+import styles from './PostCard.module.css';
 
 export default function PostCard({ post }: { post: Post }) {
   const [displayName, setDisplayName] = useState('Unknown User');
@@ -32,23 +32,19 @@ export default function PostCard({ post }: { post: Post }) {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
       whileHover={{ scale: 1.02 }}
+      className={styles.motionWrapper}
     >
-      <Card className="bg-gradient-to-br from-blue-50 to-teal-50 border-none shadow-md rounded-2xl transition-all duration-200 hover:shadow-lg">
-        <CardHeader className="pb-4">
-          <CardTitle className="text-xl font-semibold text-blue-800 tracking-tight">
-            <Link
-              href={`/forum/${post.id}`}
-              className="hover:text-teal-600 transition-colors duration-200"
-            >
+      <Card className={styles.card}>
+        <CardHeader className={styles.cardHeader}>
+          <CardTitle className={styles.cardTitle}>
+            <Link href={`/forum/${post.id}`} className={styles.titleLink}>
               {post.title}
             </Link>
           </CardTitle>
         </CardHeader>
-        <CardContent>
-          <p className="text-gray-700 text-base line-clamp-2 leading-relaxed">
-            {post.content}
-          </p>
-          <p className="text-sm text-gray-500 mt-3">
+        <CardContent className={styles.cardContent}>
+          <p className={styles.content}>{post.content}</p>
+          <p className={styles.meta}>
             Posted by {displayName} on {createdAt}
           </p>
         </CardContent>
