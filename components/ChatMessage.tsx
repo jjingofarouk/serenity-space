@@ -1,4 +1,3 @@
-// components/ChatMessage.tsx
 'use client';
 import { Message } from '@/lib/types';
 import { format } from 'date-fns';
@@ -7,6 +6,7 @@ import { Timestamp } from 'firebase/firestore';
 import { useState, useEffect } from 'react';
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
+import styles from './ChatMessage.module.css';
 
 interface ChatMessageProps {
   message: Message;
@@ -33,25 +33,19 @@ export default function ChatMessage({ message, currentUserId }: ChatMessageProps
 
   return (
     <motion.div
-      className={`flex ${isCurrentUser ? 'justify-end' : 'justify-start'} mb-4`}
-      initial={{ opacity: 0, y: 20 }}
+      className={`${styles.messageContainer} ${isCurrentUser ? styles.messageRight : styles.messageLeft}`}
+      initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
       role="listitem"
       aria-label={`Message from ${isCurrentUser ? 'you' : displayName}`}
     >
       <div
-        className={`max-w-[70%] p-4 rounded-xl shadow-sm ${
-          isCurrentUser
-            ? 'bg-teal-600 text-white'
-            : 'bg-gray-100 text-gray-800'
-        }`}
+        className={`${styles.message} ${isCurrentUser ? styles.messageCurrentUser : styles.messageOtherUser}`}
       >
-        <p className="text-base break-words">{message.text}</p>
+        <p className={styles.messageText}>{message.text}</p>
         <span
-          className={`text-xs ${
-            isCurrentUser ? 'text-teal-100' : 'text-gray-500'
-          } block mt-1 text-right`}
+          className={`${styles.timestamp} ${isCurrentUser ? styles.timestampCurrentUser : styles.timestampOtherUser}`}
         >
           {displayName} • {timestamp}
         </span>
