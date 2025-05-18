@@ -5,20 +5,32 @@
   overflow: hidden;
   background: var(--card-background);
   border-bottom: 1px solid var(--border);
-  padding: 0.75rem 0;
+  padding: 0.5rem 0;
+  position: relative;
+  z-index: 10;
 }
 
 .marquee {
+  display: flex;
   white-space: nowrap;
-  display: inline-block;
   font-family: 'Inter', sans-serif;
-  font-size: 1rem;
+  font-size: 0.875rem;
   font-weight: 500;
   color: var(--text-primary);
+  animation: marquee var(--marquee-duration) linear infinite;
 }
 
 .marquee span {
   display: inline-block;
-  padding: 0 3rem;
+  padding: 0 2rem;
   color: var(--accent);
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(calc(-1 * var(--marquee-width)));
+  }
 }
