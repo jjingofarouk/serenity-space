@@ -1,50 +1,52 @@
-
 /* app/forum/[postId]/page.module.css */
 .container {
-  max-width: 800px;
+  width: 100%;
+  max-width: 100%;
+  padding: 32px 16px;
   margin: 0 auto;
-  padding: 24px;
 }
 
 .card {
-  background: linear-gradient(145deg, #ffffff, #e6ecef);
+  background: var(--card-background);
   border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border: 1px solid var(--border);
+  box-shadow: 0 4px 12px var(--shadow);
+  width: 100%;
 }
 
 .cardHeader {
-  padding: 16px;
-  border-bottom: 1px solid #e5e7eb;
+  padding: 24px;
+  border-bottom: 1px solid var(--border);
 }
 
 .cardTitle {
   font-size: 1.75rem;
   font-weight: 600;
-  color: #1e3a8a;
+  color: var(--text-primary);
   letter-spacing: -0.025em;
 }
 
 .cardContent {
-  padding: 16px;
+  padding: 24px;
 }
 
 .content {
-  color: #4b5563;
+  color: var(--text-primary);
   font-size: 1.125rem;
   line-height: 1.75;
-  margin-bottom: 16px;
+  margin-bottom: 24px;
 }
 
 .meta {
-  color: #6b7280;
+  color: var(--text-secondary);
   font-size: 0.875rem;
-  margin-bottom: 24px;
+  margin-bottom: 32px;
 }
 
 .actions {
   display: flex;
-  gap: 12px;
-  margin-bottom: 24px;
+  gap: 16px;
+  margin-bottom: 32px;
 }
 
 .reactionButton {
@@ -52,30 +54,30 @@
   border: none;
   font-size: 1.25rem;
   cursor: pointer;
-  color: #6b7280;
-  transition: transform 0.2s ease-in-out, color 0.2s ease-in-out;
+  color: var(--text-secondary);
+  transition: color 0.2s ease, transform 0.2s ease;
 }
 
 .reactionButton:hover {
-  transform: scale(1.2);
-  color: #0d9488;
+  color: var(--accent);
+  transform: scale(1.1);
 }
 
 .reactionButton.active {
-  color: #0d9488;
+  color: var(--accent);
   font-weight: 600;
 }
 
 .loading {
   text-align: center;
-  color: #6b7280;
+  color: var(--text-secondary);
   font-size: 1.125rem;
   padding: 48px;
 }
 
 .error {
   text-align: center;
-  color: #dc2626;
+  color: var(--error);
   font-size: 1.125rem;
   padding: 48px;
 }
